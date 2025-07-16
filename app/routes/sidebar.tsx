@@ -76,7 +76,7 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen">
         <div
-          className={`border border-r border-neutral-200 max-h-full overflow-y-scroll flex flex-col gap-2 min-w-min h-full`}
+          className={`border border-r border-neutral-200 max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
         >
           {selectedIdea ? (
             <button
