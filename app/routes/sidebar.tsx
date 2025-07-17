@@ -169,7 +169,7 @@ const SideBar = () => {
             </button>
           </div>
           {selectedIdea ? (
-            <div className="absolute h-screen flex flex-col justify-center items-center right-0 top-0">
+            <div className="absolute h-screen w-full flex flex-col justify-center items-center top-0 left-0 z-20 bg-white/50">
               <IdeaPanel
                 idea={selectedIdea}
                 handleClose={() => setSelectedIdea(null)}
