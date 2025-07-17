@@ -22,7 +22,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
       <div className="flex gap-4 w-full">
         <span className="border border-neutral-200 p-1">{idea.borough}</span>
         <span className="border border-neutral-200 p-1">
-          {idea.status === "None"
+          {idea.status === null
             ? "Did Not Advance"
             : idea.status.Final20Ideas
             ? "Finalist"

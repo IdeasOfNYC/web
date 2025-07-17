@@ -28,8 +28,8 @@ export interface BAStatus {
   BASubcategory: string[];
   Final20Ideas: boolean;
   FinalBallot: boolean;
-  FinalDescription: string;
-  FinalTitle: string;
+  FinalDescription: string | null;
+  FinalTitle: string | null;
 }
 
 export interface Idea {
@@ -56,7 +56,7 @@ export interface IdeaFilter {
 }
 
 export function isBAStatus(obj: unknown): obj is BAStatus {
-  if (typeof obj !== "object" || obj === null) {
+  if (typeof obj !== "object") {
     return false;
   }
 
@@ -69,8 +69,8 @@ export function isBAStatus(obj: unknown): obj is BAStatus {
     o.BASubcategory.every((item) => typeof item === "string") &&
     typeof o.Final20Ideas === "boolean" &&
     typeof o.FinalBallot === "boolean" &&
-    typeof o.FinalDescription === "string" &&
-    typeof o.FinalTitle === "string"
+    (typeof o.FinalDescription === "string" || o.FinalDescription === null) &&
+    (typeof o.FinalTitle === "string" || o.FinalDescription === null)
   );
 }
 
@@ -105,6 +105,6 @@ export function isIdea(obj: unknown): obj is Idea {
     o.impactArea.every((item) => typeof item === "string") &&
     Array.isArray(o.subCategory) &&
     o.subCategory.every((item) => typeof item === "string") &&
-    (o.status === "None" || isBAStatus(o.status))
+    (o.status === null || isBAStatus(o.status))
   );
 }

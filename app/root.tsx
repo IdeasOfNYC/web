@@ -91,8 +91,6 @@ export default function App() {
     ]
   );
 
-  useEffect(() => console.log(filteredIdeas), [filteredIdeas]);
-
   const filterIdeas = useCallback(
     (allIdeas: Idea[]) => {
       if (timeoutIdRef.current) {
@@ -138,7 +136,6 @@ export default function App() {
   useEffect(() => {
     if (ideas) {
       filterIdeas(ideas);
-      console.log("filtered");
     }
   }, [filterIdeas, ideas]);
 
