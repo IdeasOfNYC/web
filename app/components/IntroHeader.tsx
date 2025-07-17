@@ -37,7 +37,7 @@ export default function IntroHeader() {
       </div>
 
       {/* hero section with paper background */}
-      <div className="relative w-full max-w-[1200px] flex flex-col items-center justify-center pt-8">
+      <div className="relative w-full xl:max-w-[1150px] max-w-[1000px] flex flex-col items-center justify-center xl:pt-8 pt-16">
         {/* paper */}
         <img
           src="/landingBackground.png"
