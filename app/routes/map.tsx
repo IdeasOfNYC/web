@@ -1,5 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { IdeaContext } from "~/context/IdeaContext";
+import { useEffect, useRef, useState } from "react";
 
 interface Midpoint {
   x: number;
@@ -8,8 +7,6 @@ interface Midpoint {
 }
 
 const Map = () => {
-  const ideaContext = useContext(IdeaContext);
-
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const statenIslandRef = useRef<SVGPathElement>(null);
@@ -21,8 +18,6 @@ const Map = () => {
   const [midpoints, setMidpoints] = useState<Midpoint[]>([]);
 
   useEffect(() => {
-    console.log(ideaContext.targetBorough);
-
     const calculateMidpoints = () => {
       const newMidpoints: Midpoint[] = [];
 
@@ -80,7 +75,7 @@ const Map = () => {
     return () => {
       observer.disconnect();
     };
-  }, [ideaContext.targetBorough]);
+  }, []);
 
   return (
     <div

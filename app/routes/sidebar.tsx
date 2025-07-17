@@ -16,8 +16,8 @@ const SideBar = () => {
   const [currentPage, setCurrentPage] = useState<number | null>(null);
 
   useEffect(() => {
-    if (ideaContext.ideas) setCurrentPage(0);
-  }, [ideaContext.ideas]);
+    if (ideaContext.filteredIdeas) setCurrentPage(0);
+  }, [ideaContext.filteredIdeas]);
 
   useEffect(() => {
     if (displayMode === "map") navigate("/map");
@@ -25,10 +25,10 @@ const SideBar = () => {
   }, [displayMode, navigate]);
 
   const MemoizedIdeas = useMemo(() => {
-    return ideaContext.ideas && currentPage !== null ? (
+    return ideaContext.filteredIdeas && currentPage !== null ? (
       <div className="flex flex-col gap-2 max-w-2xl">
         <>
-          {ideaContext.ideas
+          {ideaContext.filteredIdeas
             .slice(
               currentPage * PAGINATION_SIZE,
               (currentPage + 1) * PAGINATION_SIZE
@@ -53,13 +53,13 @@ const SideBar = () => {
           </button>
           <p className="text-nowrap">
             Page {currentPage + 1} of{" "}
-            {Math.floor(ideaContext.ideas.length / PAGINATION_SIZE)}
+            {Math.floor(ideaContext.filteredIdeas.length / PAGINATION_SIZE)}
           </p>
           <button
             className="w-min h-full flex items-center p-2 hover:bg-neutral-50 bg-white cursor-pointer border border-neutral-200"
             disabled={
               currentPage + 1 >=
-              Math.floor(ideaContext.ideas.length / PAGINATION_SIZE)
+              Math.floor(ideaContext.filteredIdeas.length / PAGINATION_SIZE)
             }
             onClick={() => setCurrentPage(currentPage + 1)}
           >
@@ -70,7 +70,7 @@ const SideBar = () => {
     ) : (
       <p>Loading Ideas...</p>
     );
-  }, [currentPage, ideaContext.ideas]);
+  }, [currentPage, ideaContext.filteredIdeas]);
 
   if (ideaContext)
     return (
@@ -96,13 +96,10 @@ const SideBar = () => {
             <div className="flex gap-2 w-full">
               <Search
                 handleSearchTermChange={(newTerm) => {
-                  const newFilterFunction = (idea: Idea) => {
-                    const titleContains = idea.solution
-                      .toLowerCase()
-                      .includes(newTerm.toLocaleLowerCase());
-                    return titleContains;
-                  };
-                  ideaContext.setIdeaFilter(newFilterFunction);
+                  ideaContext.setIdeaFilter({
+                    ...ideaContext.ideaFilter,
+                    keyword: newTerm,
+                  });
                 }}
               ></Search>
               <select
@@ -113,9 +110,10 @@ const SideBar = () => {
                     BOROUGHS.includes(selectedBorough as Borough) ||
                     selectedBorough === "All"
                   ) {
-                    ideaContext.setTargetBorough(
-                      selectedBorough as Borough | "All"
-                    );
+                    ideaContext.setIdeaFilter({
+                      ...ideaContext.ideaFilter,
+                      borough: selectedBorough as Borough,
+                    });
                   }
                 }}
               >

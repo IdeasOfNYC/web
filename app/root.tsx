@@ -10,8 +10,8 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { IdeaContext } from "./context/IdeaContext";
-import { useCallback, useEffect, useRef, useState, useMemo } from "react";
-import { type Borough, type Idea, type IdeaFilterFunction } from "./types";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { type Idea, type IdeaFilter } from "./types";
 import { loadIdeas } from "./utils";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -49,54 +49,62 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const [ideas, setIdeas] = useState<Idea[] | null>(null);
   const [filteredIdeas, setFilteredIdeas] = useState<Idea[] | null>(null);
-  const [ideaFilterFunction, setIdeaFilterFunction] =
-    useState<IdeaFilterFunction | null>(null);
-  const [targetBorough, setTargetBorough] = useState<Borough | null>(null);
+  const [ideaFilter, setIdeaFilter] = useState<IdeaFilter>({
+    keyword: null,
+    borough: null,
+    impactArea: [],
+    stage: "submitted",
+  });
 
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
-
-  const manhattanIdeas = useMemo(
-    () => ideas?.filter((idea) => idea.borough === "manhattan") || null,
-    [ideas]
-  );
-  const brooklynIdeas = useMemo(
-    () => ideas?.filter((idea) => idea.borough === "brooklyn") || null,
-    [ideas]
-  );
-  const queensIdeas = useMemo(
-    () => ideas?.filter((idea) => idea.borough === "queens") || null,
-    [ideas]
-  );
-  const bronxIdeas = useMemo(
-    () => ideas?.filter((idea) => idea.borough === "bronx") || null,
-    [ideas]
-  );
-  const statenIslandIdeas = useMemo(
-    () => ideas?.filter((idea) => idea.borough === "staten island") || null,
-    [ideas]
-  );
-
-  const setFilter = (newFilter: IdeaFilterFunction) => {
-    setIdeaFilterFunction(() => newFilter);
-  };
 
   useEffect(() => {
     loadIdeas().then((ideas) => setIdeas(ideas));
   }, []);
 
+  const filterFunction = useCallback(
+    (idea: Idea) => {
+      const boroughFilter = ideaFilter.borough
+        ? idea.borough === ideaFilter.borough
+        : true;
+      const impactAreaFilter = ideaFilter.impactArea.every((someImpactArea) => {
+        idea.impactArea.includes(someImpactArea);
+      });
+      const keywordFilter = ideaFilter.keyword
+        ? idea.solution
+            .toLocaleLowerCase()
+            .includes(ideaFilter.keyword.toLocaleLowerCase())
+        : true;
+      const stageFilter =
+        (ideaFilter.stage === "ballot" && idea.status?.FinalBallot
+          ? true
+          : false) ||
+        (ideaFilter.stage === "BA" && idea.status ? true : false) ||
+        ideaFilter.stage === "submitted";
+      return boroughFilter && impactAreaFilter && keywordFilter && stageFilter;
+    },
+    [
+      ideaFilter.borough,
+      ideaFilter.impactArea,
+      ideaFilter.keyword,
+      ideaFilter.stage,
+    ]
+  );
+
+  useEffect(() => console.log(filteredIdeas), [filteredIdeas]);
+
   const filterIdeas = useCallback(
-    (localIdeas: Idea[], filterFunction: IdeaFilterFunction) => {
+    (allIdeas: Idea[]) => {
       if (timeoutIdRef.current) {
         clearTimeout(timeoutIdRef.current);
         timeoutIdRef.current = null;
       }
       setFilteredIdeas(() => []);
-      const FILTER_SIZE = 10;
+      const FILTER_SIZE = 100;
       const filterIdeasAux = (
         innerIdeas: Idea[],
         index: number,
-        filterGroupSize: number,
-        filterFunction: IdeaFilterFunction
+        filterGroupSize: number
       ) => {
         const currentSlice = innerIdeas.slice(
           Math.max(0, index),
@@ -114,79 +122,33 @@ export default function App() {
             filterIdeasAux(
               innerIdeas,
               index + filterGroupSize,
-              filterGroupSize,
-              filterFunction
+              filterGroupSize
             );
-          }, 1000);
+          }, 50);
         } else {
           timeoutIdRef.current = null;
         }
       };
 
-      filterIdeasAux(localIdeas, 0, FILTER_SIZE, filterFunction);
+      filterIdeasAux(allIdeas, 0, FILTER_SIZE);
     },
-    []
+    [filterFunction]
   );
 
   useEffect(() => {
     if (ideas) {
-      let ideasToFilterFrom: Idea[] | null = ideas;
-
-      switch (targetBorough) {
-        case "manhattan":
-          ideasToFilterFrom = manhattanIdeas;
-          break;
-        case "brooklyn":
-          ideasToFilterFrom = brooklynIdeas;
-          break;
-        case "queens":
-          ideasToFilterFrom = queensIdeas;
-          break;
-        case "bronx":
-          ideasToFilterFrom = bronxIdeas;
-          break;
-        case "staten island":
-          ideasToFilterFrom = statenIslandIdeas;
-          break;
-        default:
-          ideasToFilterFrom = ideas; // Use all ideas if no borough is selected
-      }
-
-      if (ideasToFilterFrom) {
-        if (ideaFilterFunction) {
-          filterIdeas(ideasToFilterFrom, ideaFilterFunction);
-        } else {
-          setFilteredIdeas(ideasToFilterFrom);
-        }
-      } else {
-        setFilteredIdeas(null); // If no ideas to filter from, set filteredIdeas to null
-      }
+      filterIdeas(ideas);
+      console.log("filtered");
     }
-  }, [
-    ideas,
-    ideaFilterFunction,
-    targetBorough,
-    filterIdeas,
-    manhattanIdeas,
-    brooklynIdeas,
-    queensIdeas,
-    bronxIdeas,
-    statenIslandIdeas,
-  ]);
-
-  useEffect(() => {
-    console.log(targetBorough);
-  }, [targetBorough]);
+  }, [filterIdeas, ideas]);
 
   return (
     <IdeaContext.Provider
       value={{
-        ideas: filteredIdeas,
-        setIdeaFilter: setFilter,
-        targetBorough: targetBorough,
-        setTargetBorough: (newBorough: Borough | "All") => {
-          setTargetBorough(newBorough === "All" ? null : newBorough);
-        },
+        allIdeas: ideas,
+        filteredIdeas: filteredIdeas,
+        ideaFilter: ideaFilter,
+        setIdeaFilter: setIdeaFilter,
       }}
     >
       <Outlet />

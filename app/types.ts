@@ -21,7 +21,7 @@ export const TESTTYPES: TestType[] = ["Type A", "Type B", "Type C"];
 export type TestImpact = "Health" | "Education" | "Community";
 export const TESTIMPACTS: TestImpact[] = ["Health", "Education", "Community"];
 
-export type Option<T> = "None" | T;
+export type Option<T> = null | T;
 
 export interface BAStatus {
   BAImpactArea: string[];
@@ -44,6 +44,15 @@ export interface Idea {
   impactArea: string[];
   subCategory: string[];
   status: Option<BAStatus>;
+}
+
+export type IdeaStage = "submitted" | "BA" | "ballot";
+
+export interface IdeaFilter {
+  keyword: Option<string>;
+  borough: Option<Borough>;
+  impactArea: string[];
+  stage: IdeaStage;
 }
 
 export function isBAStatus(obj: unknown): obj is BAStatus {
@@ -99,5 +108,3 @@ export function isIdea(obj: unknown): obj is Idea {
     (o.status === "None" || isBAStatus(o.status))
   );
 }
-
-export type IdeaFilterFunction = (idea: Idea) => boolean;
