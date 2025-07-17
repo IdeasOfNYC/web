@@ -32,7 +32,7 @@ export const generateRandomIdea = (): Idea => {
   const randomSubCategory: TestType[] = getRandomArrayElements(TESTTYPES, 1, 5);
 
   const statusOptions: Option<BAStatus>[] = [
-    "None",
+    null,
     {
       BAImpactArea: getRandomArrayElements(TESTIMPACTS, 1, 5),
       BASubcategory: getRandomArrayElements(TESTTYPES, 1, 5),
@@ -86,4 +86,11 @@ export const loadIdeas = async (): Promise<Idea[]> => {
   }
 
   return ideas;
+};
+
+export const toTitleCase = (str: string): string => {
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };

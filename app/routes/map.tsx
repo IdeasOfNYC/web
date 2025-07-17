@@ -1,4 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
+import { IdeaContext } from "~/context/IdeaContext";
+import { BOROUGHS, type Borough } from "~/types";
 
 interface Midpoint {
   x: number;
@@ -17,6 +26,24 @@ const Map = () => {
 
   const [midpoints, setMidpoints] = useState<Midpoint[]>([]);
 
+  const [categorization, setCategorization] = useState<"stage" | "impact">(
+    "stage"
+  );
+
+  const { ideaFilter, setIdeaFilter } = useContext(IdeaContext);
+
+  const boroughs: { name: Borough; ref: RefObject<SVGPathElement | null> }[] =
+    useMemo(
+      () => [
+        { name: "staten island", ref: statenIslandRef },
+        { name: "brooklyn", ref: brooklynRef },
+        { name: "queens", ref: queensRef },
+        { name: "manhattan", ref: manhattanRef },
+        { name: "bronx", ref: bronxRef },
+      ],
+      []
+    );
+
   useEffect(() => {
     const calculateMidpoints = () => {
       const newMidpoints: Midpoint[] = [];
@@ -30,20 +57,11 @@ const Map = () => {
       const ctm = svgElement.getScreenCTM();
       if (!ctm) return;
 
-      const boroughs = [
-        { name: "Staten Island", ref: statenIslandRef },
-        { name: "Brooklyn", ref: brooklynRef },
-        { name: "Queens", ref: queensRef },
-        { name: "Manhattan", ref: manhattanRef },
-        { name: "Bronx", ref: bronxRef },
-      ];
-
       boroughs.forEach((borough) => {
         if (borough.ref.current) {
           const bbox = borough.ref.current.getBBox();
           const svgMidX = bbox.x + bbox.width / 2;
           const svgMidY = bbox.y + bbox.height / 2;
-          if (borough.name === "Bronx") console.log(bbox.x, bbox.y);
 
           // Create an SVGPoint for the midpoint in SVG coordinates
           const svgPoint = svgElement.createSVGPoint();
@@ -75,13 +93,47 @@ const Map = () => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [boroughs]);
 
   return (
     <div
       className="w-full h-full flex items-center justify-center relative"
       ref={containerRef}
     >
+      <div className="absolute w-full top-2 left-0 flex  justify-center items-center">
+        <span className="flex gap-2 items-center border border-dotted border-neutral-300 p-1">
+          <p>Ideas by</p>
+          <select
+            className="w-min p-2 border border-neutral-200 bg-white"
+            value={categorization}
+            onChange={(e) =>
+              setCategorization(e.target.value as "stage" | "impact")
+            }
+          >
+            <option value="stage">Stage</option>
+            <option value="impact">Impact</option>
+          </select>
+          <p>from</p>
+          <select
+            className="w-min p-2 border border-neutral-200 bg-white"
+            value={ideaFilter.borough || ""}
+            onChange={(e) =>
+              setIdeaFilter({
+                ...ideaFilter,
+                borough:
+                  e.target.value === "" ? null : (e.target.value as Borough),
+              })
+            }
+          >
+            <option value="">All of NYC</option>
+            {BOROUGHS.map((borough) => (
+              <option key={borough} value={borough}>
+                {borough.charAt(0).toUpperCase() + borough.slice(1)}
+              </option>
+            ))}
+          </select>
+        </span>
+      </div>
       <div className="w-48 h-32 bg-blue-500 absolute bottom-2 right-2"></div>
       <svg
         ref={svgRef}

@@ -6,6 +6,7 @@ import { SidebarIdea } from "~/components/SidebarIdea";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
 import type { Idea } from "~/types";
+import { toTitleCase } from "~/utils";
 
 const SideBar = () => {
   const ideaContext = useContext(IdeaContext);
@@ -106,16 +107,22 @@ const SideBar = () => {
                 className="w-min p-2 border border-neutral-200"
                 onChange={(e) => {
                   const selectedBorough = e.target.value;
-                  if (
-                    BOROUGHS.includes(selectedBorough as Borough) ||
-                    selectedBorough === "All"
-                  ) {
+                  if (BOROUGHS.includes(selectedBorough as Borough)) {
                     ideaContext.setIdeaFilter({
                       ...ideaContext.ideaFilter,
-                      borough: selectedBorough as Borough,
+                      borough: selectedBorough.toLowerCase() as Borough,
                     });
-                  }
+                  } else if (selectedBorough === "All")
+                    ideaContext.setIdeaFilter({
+                      ...ideaContext.ideaFilter,
+                      borough: null,
+                    });
                 }}
+                value={
+                  ideaContext.ideaFilter.borough
+                    ? ideaContext.ideaFilter.borough
+                    : "All"
+                }
               >
                 <option value="All">All Boroughs</option>
                 {BOROUGHS.map((borough) => (
