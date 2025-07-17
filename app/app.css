@@ -1,1 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@400..700&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Edu SA Beginner", cursive;
+  --ease-custom: cubic-bezier(0.545, 0.03, 0.33, 1.03);
+  /* define keyframes */
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(0.75rem); /* use rem units, not just -3 */
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* define animation variable */
+  --animate-fade-in: fade-in 0.5s var(--ease-custom) forwards;
+}

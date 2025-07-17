@@ -1,25 +1,23 @@
-import { useState } from "react";
 const Sandbox = () => {
-  const [num,setNum] = useState <number> (1);
+  return (
+    <div className="items-start w-full px-4 flex justify-between">
+      <div className="flex flex-row">
+        <img src="image copy 2.png" className="h-15 mt-4" alt="" />
+        <div className="flex justify-start mt-10">IoNYC</div>
+      </div>
 
-  const [num2,setNum2] = useState <number> (2);
-  const [word,setWord] = useState <string> ("meow"); 
-  return <div>
-    <p>number 1</p>
-    <p><button onClick={()=> {
-      setNum(num+1);
-    }}>{num}</button></p>
+      <div className="flex justify-between px-4 text-sm font-medium mt-8 border border-dotted rounded p-2 w-min">
+        <button className="text-nowrap pr-5">About the Process</button>
+        <button className="text-nowrap pr-5">FAQs</button>
+        <button className="text-nowrap">Selected Ideas</button>
+      </div>
 
-    <p>number 2</p>
-    <p><button onClick={()=> {
-      setNum2(num2+1);
-    }}>{num2}</button></p>
-
-    <p>the sum!</p>
-    <p>{num+num2}</p>
-    
-    {word}
-    </div>;
+      <div className="flex justify-end mt-8 border border-dotted rounded pl-8 p-2 w-min">
+        <button className="text-nowrap">The People's Money</button>
+        <div className="flex flex-row p-2"></div>
+        <img src="image copy.png" className="h-5" alt="" />
+      </div>
+    </div>
+  );
 };
-
 export default Sandbox;
