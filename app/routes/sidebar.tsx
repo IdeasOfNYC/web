@@ -6,7 +6,6 @@ import { SidebarIdea } from "~/components/SidebarIdea";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
 import type { Idea } from "~/types";
-import { toTitleCase } from "~/utils";
 
 const SideBar = () => {
   const ideaContext = useContext(IdeaContext);

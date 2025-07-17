@@ -6,13 +6,14 @@ import {
   useState,
   type RefObject,
 } from "react";
+import { SplitViewer } from "~/components/SplitViewer";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
 
 interface Midpoint {
   x: number;
   y: number;
-  name: string;
+  name: Borough;
 }
 
 const Map = () => {
@@ -30,7 +31,8 @@ const Map = () => {
     "stage"
   );
 
-  const { ideaFilter, setIdeaFilter } = useContext(IdeaContext);
+  const { ideaFilter, setIdeaFilter, filteredIdeas, allIdeas } =
+    useContext(IdeaContext);
 
   const boroughs: { name: Borough; ref: RefObject<SVGPathElement | null> }[] =
     useMemo(
@@ -95,11 +97,63 @@ const Map = () => {
     };
   }, [boroughs]);
 
+  const statenIslandIdeas = useMemo(
+    () =>
+      (filteredIdeas ?? []).filter((idea) => idea.borough === "staten island"),
+    [filteredIdeas]
+  );
+  const brooklynIdeas = useMemo(
+    () => (filteredIdeas ?? []).filter((idea) => idea.borough === "brooklyn"),
+    [filteredIdeas]
+  );
+  const queensIdeas = useMemo(
+    () => (filteredIdeas ?? []).filter((idea) => idea.borough === "queens"),
+    [filteredIdeas]
+  );
+  const manhattanIdeas = useMemo(
+    () => (filteredIdeas ?? []).filter((idea) => idea.borough === "manhattan"),
+    [filteredIdeas]
+  );
+  const bronxIdeas = useMemo(
+    () => (filteredIdeas ?? []).filter((idea) => idea.borough === "bronx"),
+    [filteredIdeas]
+  );
+
   return (
     <div
       className="w-full h-full flex items-center justify-center relative"
       ref={containerRef}
     >
+      <div className="absolute bottom-8 right-8">
+        <SplitViewer
+          ideas={allIdeas ? allIdeas : []}
+          showLabels={true}
+        ></SplitViewer>
+      </div>
+      {midpoints.map((midpoint) => (
+        <div
+          key={midpoint.name}
+          className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
+          style={{
+            left: `${midpoint.x}px`,
+            top: `${midpoint.y}px`,
+          }}
+          title={midpoint.name}
+        >
+          {midpoint.name === "staten island" && (
+            <SplitViewer ideas={statenIslandIdeas} />
+          )}
+          {midpoint.name === "brooklyn" && (
+            <SplitViewer ideas={brooklynIdeas} />
+          )}
+          {midpoint.name === "queens" && <SplitViewer ideas={queensIdeas} />}
+          {midpoint.name === "manhattan" && (
+            <SplitViewer ideas={manhattanIdeas} />
+          )}
+          {midpoint.name === "bronx" && <SplitViewer ideas={bronxIdeas} />}
+        </div>
+      ))}
+
       <div className="absolute w-full top-2 left-0 flex  justify-center items-center">
         <span className="flex gap-2 items-center border border-dotted border-neutral-300 p-1">
           <p>Ideas by</p>
@@ -134,7 +188,6 @@ const Map = () => {
           </select>
         </span>
       </div>
-      <div className="w-48 h-32 bg-blue-500 absolute bottom-2 right-2"></div>
       <svg
         ref={svgRef}
         width="687"
@@ -174,17 +227,6 @@ const Map = () => {
           className="stroke-neutral-400"
         />
       </svg>
-      {midpoints.map((midpoint) => (
-        <div
-          key={midpoint.name}
-          className="absolute -translate-x-1/2 -translate-y-1/2 z-10 bg-blue-400 w-32 h-16"
-          style={{
-            left: `${midpoint.x}px`,
-            top: `${midpoint.y}px`,
-          }}
-          title={midpoint.name}
-        />
-      ))}
     </div>
   );
 };
