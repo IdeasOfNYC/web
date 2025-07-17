@@ -87,6 +87,7 @@ const Map = () => {
       className="w-full h-full flex items-center justify-center relative"
       ref={containerRef}
     >
+      <div className="w-48 h-32 bg-blue-500 absolute bottom-2 right-2"></div>
       <svg
         ref={svgRef}
         width="687"
@@ -129,16 +130,10 @@ const Map = () => {
       {midpoints.map((midpoint) => (
         <div
           key={midpoint.name}
+          className="absolute -translate-x-1/2 -translate-y-1/2 z-10 bg-blue-400 w-32 h-16"
           style={{
-            position: "absolute",
             left: `${midpoint.x}px`,
             top: `${midpoint.y}px`,
-            transform: "translate(-50%, -50%)", // Center the div
-            width: "10px",
-            height: "10px",
-            backgroundColor: "red",
-            borderRadius: "50%",
-            zIndex: 10,
           }}
           title={midpoint.name}
         />

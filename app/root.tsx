@@ -128,8 +128,6 @@ export default function App() {
     []
   );
 
-  // add a useeffect and 5 usememos; whenever ideas changes, filter all ideas by borough. for the useeffect immediately after this comment, change it so that it checks for what borough is selected. if null, use the base allideas as the source to filter from
-
   useEffect(() => {
     if (ideas) {
       let ideasToFilterFrom: Idea[] | null = ideas;
