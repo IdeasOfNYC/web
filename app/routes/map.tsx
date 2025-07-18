@@ -4,10 +4,12 @@ import {
   useMemo,
   useRef,
   useState,
+  type FC,
   type RefObject,
 } from "react";
+import { IACircles } from "~/components/IACircles";
 import { IdeaScatter } from "~/components/IdeaScatter";
-import { SplitViewer } from "~/components/SplitViewer";
+import { StageCircles } from "~/components/StageCircles";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough, type Idea } from "~/types";
 
@@ -16,6 +18,24 @@ interface Midpoint {
   y: number;
   name: Borough;
 }
+
+type Categorization = "stage" | "impact";
+
+interface CircleWrapperProps {
+  categorization: Categorization;
+  ideas: Idea[];
+  expanded?: boolean;
+}
+
+const CircleWrapper: FC<CircleWrapperProps> = ({
+  categorization,
+  ideas,
+  expanded = false,
+}) => {
+  if (categorization === "impact")
+    return <IACircles ideas={ideas} expanded={expanded}></IACircles>;
+  else return <StageCircles ideas={ideas} expanded={expanded}></StageCircles>;
+};
 
 const Map = () => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -243,9 +263,10 @@ const Map = () => {
           ) : (
             <></>
           )}
-          <SplitViewer
+          <CircleWrapper
             ideas={selectedIdeas ? selectedIdeas : allIdeas ? allIdeas : []}
-            showLabels={true}
+            expanded={true}
+            categorization={categorization}
           />
         </div>
         {ideaFilter.borough === null ? (
@@ -260,18 +281,35 @@ const Map = () => {
               title={midpoint.name}
             >
               {midpoint.name === "staten island" && (
-                <SplitViewer ideas={statenIslandIdeas} />
+                <CircleWrapper
+                  ideas={statenIslandIdeas}
+                  categorization={categorization}
+                />
               )}
               {midpoint.name === "brooklyn" && (
-                <SplitViewer ideas={brooklynIdeas} />
+                <CircleWrapper
+                  ideas={brooklynIdeas}
+                  categorization={categorization}
+                />
               )}
               {midpoint.name === "queens" && (
-                <SplitViewer ideas={queensIdeas} />
+                <CircleWrapper
+                  ideas={queensIdeas}
+                  categorization={categorization}
+                />
               )}
               {midpoint.name === "manhattan" && (
-                <SplitViewer ideas={manhattanIdeas} />
+                <CircleWrapper
+                  ideas={manhattanIdeas}
+                  categorization={categorization}
+                />
               )}
-              {midpoint.name === "bronx" && <SplitViewer ideas={bronxIdeas} />}
+              {midpoint.name === "bronx" && (
+                <CircleWrapper
+                  ideas={bronxIdeas}
+                  categorization={categorization}
+                />
+              )}
             </div>
           ))
         ) : (

@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import type { Idea } from "~/types";
 
-export interface SplitViewerProps {
+export interface StageCirclesProps {
   ideas: Idea[];
-  showLabels?: boolean;
+  expanded?: boolean;
 }
 
-export function SplitViewer({ ideas, showLabels = false }: SplitViewerProps) {
+export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
   const baIdeas = useMemo(() => {
     return ideas.filter((idea) => {
       return idea.status !== null;
@@ -34,7 +34,7 @@ export function SplitViewer({ ideas, showLabels = false }: SplitViewerProps) {
         >
           {ideas.length}
         </div>
-        {showLabels ? (
+        {expanded ? (
           <span className="text-sm text-neutral-700 min-w-36">Submitted</span>
         ) : (
           <></>
@@ -52,7 +52,7 @@ export function SplitViewer({ ideas, showLabels = false }: SplitViewerProps) {
         >
           {baIdeas.length}
         </div>
-        {showLabels ? (
+        {expanded ? (
           <span className="text-sm text-neutral-700 text-nowrap">
             <p>Advanced to</p>
             <p>Borough Assembly (BA)</p>
@@ -73,7 +73,7 @@ export function SplitViewer({ ideas, showLabels = false }: SplitViewerProps) {
         >
           {ballotIdeas.length}
         </div>
-        {showLabels ? (
+        {expanded ? (
           <span className="text-sm text-neutral-700">Added to Ballot</span>
         ) : (
           <></>
