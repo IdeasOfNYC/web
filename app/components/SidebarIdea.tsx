@@ -12,10 +12,10 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
 
   return (
     <div
-      className="w-full p-2 border border-neutral-200 bg-white flex flex-col gap-2 relative group cursor-pointer hover:bg-neutral-50"
+      className="w-full pt-3 px-3 pb-2.5 border border-neutral-200 bg-white flex flex-col gap-3 relative group cursor-pointer hover:bg-neutral-50 rounded-lg"
       onClick={() => handleOpen(idea)}
     >
-      <h1 className="text-lg font-bold">{idea.solution}</h1>
+      <h1 className="text-xl font-bold leading-tight mb-3">{idea.solution}</h1>
 
       <div className="flex gap-4 w-full">
         <span className="border border-neutral-200 p-1 rounded-full text-sm">{toTitleCase(idea.borough)}</span>
@@ -27,8 +27,8 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
             : "Advanced to BA"}
         </span>
       </div>
-      <div className="flex gap-4 w-full">
-        <div className="flex flex-col gap-1 w-full">
+      <div className="flex gap-4 w-full mb-3">
+        <div className="flex flex-col gap-2 w-full">
           <label className="text-sm text-neutral-600 text-nowrap">
             Impact Area:
           </label>
@@ -55,7 +55,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-1 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <label className="text-sm text-neutral-600 text-nowrap">
             Audience
           </label>
