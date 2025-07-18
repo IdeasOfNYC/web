@@ -116,17 +116,21 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Stage:</label>
         <div className="space-y-1">
-          {['submitted', 'BA', 'ballot'].map(stage => (
-            <label key={stage} className="flex items-center text-sm">
+          {[
+            { value: 'submitted', label: 'Submitted' },
+            { value: 'BA', label: 'Ballot Action' },
+            { value: 'ballot', label: 'Finalist' }
+          ].map(({ value, label }) => (
+            <label key={value} className="flex items-center text-sm">
               <input
                 type="radio"
                 name="stage"
-                value={stage}
-                checked={localFilter.stage === stage}
+                value={value}
+                checked={localFilter.stage === value}
                 onChange={(e) => setLocalFilter({...localFilter, stage: e.target.value as any})}
                 className="mr-2"
               />
-              {stage}
+              {label}
             </label>
           ))}
         </div>
