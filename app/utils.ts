@@ -94,3 +94,10 @@ export const toTitleCase = (str: string): string => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
+
+export const truncate = (str: string, charLimit: number) => {
+  if (str.length <= charLimit) {
+    return str;
+  }
+  return str.slice(0, charLimit) + "...";
+};
