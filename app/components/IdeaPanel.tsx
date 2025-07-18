@@ -18,7 +18,7 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
       </button>
       <h1 className="text-lg font-bold">{idea.solution}</h1>
 
-      <div className="flex gap-4 w-full mb-3">
+      <div className="flex gap-4 w-full">
         <span className="border border-neutral-200 p-1 rounded-full text-sm">{toTitleCase(idea.borough)}</span>
         <span className={`p-1 rounded-full text-sm ${getAdvancementStyles(idea.status)}`}>
           {idea.status === null
