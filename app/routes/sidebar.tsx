@@ -78,21 +78,23 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen bg-neutral-50">
         <div
-          className={`max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
+          className={`max-h-full overflow-y-scroll flex flex-col gap-2 w-96 flex-shrink-0 h-full`}
         >
           <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
-            <div className="flex gap-2 w-full">
-              <Search
-                handleSearchTermChange={(newTerm) => {
-                  ideaContext.setIdeaFilter({
-                    ...ideaContext.ideaFilter,
-                    keyword: newTerm,
-                  });
-                }}
-              ></Search>
-              <div className="relative">
+            <div className="flex gap-1 w-full">
+              <div className="flex-1">
+                <Search
+                  handleSearchTermChange={(newTerm) => {
+                    ideaContext.setIdeaFilter({
+                      ...ideaContext.ideaFilter,
+                      keyword: newTerm,
+                    });
+                  }}
+                ></Search>
+              </div>
+              <div className="relative flex-shrink-0">
                 <button
-                  className="w-min p-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50"
+                  className="px-3 py-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50 whitespace-nowrap"
                   onClick={() => setIsFilterPopupOpen(true)}
                 >
                   Filter ▼

@@ -91,7 +91,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
   return (
     <div 
       ref={dropdownRef}
-      className="absolute top-full left-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80 max-h-96 overflow-y-auto"
+      className="absolute top-full right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80 max-h-96 overflow-y-auto"
     >
       <h3 className="text-sm font-semibold mb-3">Filter Options</h3>
       
