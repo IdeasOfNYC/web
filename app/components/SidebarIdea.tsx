@@ -33,8 +33,8 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
             Impact Area:
           </label>
 
-          <div className="flex gap-2">
-            <>
+<div className="flex flex-wrap gap-2">
+              <>
               {idea.impactArea
                 .slice(0, MAX_TRUNCATE_THRESHOLD)
                 .map((someImpactArea, idx) => (
