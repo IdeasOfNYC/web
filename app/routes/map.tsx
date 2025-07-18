@@ -314,7 +314,8 @@ const Map = () => {
             </div>
           ))
         ) : (
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 ">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[110%]">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-white w-6 h-6 z-10 translate-y-1/2 rounded-full border border-neutral-400"></div>
             {categorization === "stage" ? (
               <StageScatter
                 ideas={filteredIdeas ? filteredIdeas : []}
@@ -371,7 +372,7 @@ const Map = () => {
         viewBox="0 0 687 686"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="transition-all duration-1000 ease-in-out"
+        className="transition-all duration-700 ease-in-out"
       >
         {/* staten island */}
         <path
