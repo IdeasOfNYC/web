@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export default function Landing() {
   return (
-    <section className="flex flex-col items-center bg-neutral-50 min-h-screen relative justify-center">
+    <section className="flex flex-col items-center bg-neutral-50 h-screen relative pt-10 overflow-hidden">
       {/* nav area */}
       <div className="flex w-full px-4 justify-between items-center absolute top-2">
         <div className="flex flex-row w-96 items-center gap-1">
