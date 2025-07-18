@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export default function Landing() {
   return (
-    <section className="flex flex-col items-center bg-neutral-50 min-h-screen relative justify-center">
+    <section className="flex flex-col items-center justify-center bg-neutral-50 h-screen relative pt-10 overflow-hidden">
       {/* nav area */}
       <div className="flex w-full px-4 justify-between items-center absolute top-2">
         <div className="flex flex-row w-96 items-center gap-1">
@@ -11,31 +11,42 @@ export default function Landing() {
           <div className="flex justify-start font-display font-bold">IoNYC</div>
         </div>
 
-        <div className="flex justify-between px-4 text-sm border border-dotted rounded w-min bg-white border-neutral-400 gap-4 font-light text-neutral-600 group h-10">
-          <button className="text-nowrap group-hover:text-neutral-700 hover:text-neutral-800 hover:font-normal">
-            About the Process
-          </button>
-          <button className="text-nowrap group-hover:text-neutral-700 hover:text-neutral-800 hover:font-normal">
-            FAQs
-          </button>
-          <button className="text-nowrap group-hover:text-neutral-700 hover:text-neutral-800 hover:font-normal">
-            Selected Ideas
-          </button>
+        {/* Center: Nav buttons */}
+        <div className="flex-1 flex justify-center">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="flex gap-3 border border-dotted rounded-md bg-white border-neutral-400 px-1 py-1 text-sm sm:text-base text-neutral-700 font-medium">
+              <Link to="/about">
+                <button className="px-3 py-1 hover:bg-neutral-100 rounded-sm">
+                  About the Process
+                </button>
+              </Link>
+              <Link to="/faq">
+                <button className="px-3 py-1 hover:bg-neutral-100 rounded-sm">
+                  FAQs
+                </button>
+              </Link>
+              <Link to="/selected">
+                <button className="px-3 py-1 hover:bg-neutral-100 rounded-sm">
+                  Selected Ideas
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
 
-        <div className="w-96 flex justify-end items-center">
-          <button className="text-nowrap text-sm flex justify-center items-center px-2 border border-dotted rounded w-min h-10 border-neutral-400 bg-white hover:bg-neutral-100 cursor-pointer">
+        {/* Right: Link */}
+        <div className="flex items-center justify-end min-w-[160px]">
+          <button className="text-base sm:text-lg flex items-center border border-dotted rounded border-neutral-400 bg-white px-3 py-1 hover:bg-neutral-100">
             The People's Money
-            <div className="flex flex-row p-2"></div>
             <ExternalLinkIcon
-              strokeWidth={1.5}
+              className="ml-2"
               width={18}
               height={18}
-            ></ExternalLinkIcon>
+              strokeWidth={1.5}
+            />
           </button>
         </div>
       </div>
-
       {/* hero section with paper background */}
       <div className="relative w-full xl:max-w-[1150px] max-w-[1000px] flex flex-col items-center justify-center xl:pt-8 pt-16">
         {/* paper */}

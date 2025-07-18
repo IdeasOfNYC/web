@@ -5,6 +5,8 @@ import { Search } from "~/components/Search";
 import { SidebarIdea } from "~/components/SidebarIdea";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
+import { Link } from "react-router";
+
 
 const SideBar = () => {
   const ideaContext = useContext(IdeaContext);
@@ -75,7 +77,7 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen">
         <div
-          className={`border border-r border-neutral-200 max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
+          className={`max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
         >
           <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
             <div className="flex gap-2 w-full">
@@ -88,7 +90,7 @@ const SideBar = () => {
                 }}
               ></Search>
               <select
-                className="w-min p-2 border border-neutral-200"
+                className="w-min p-2 border border-neutral-200 rounded-lg"
                 onChange={(e) => {
                   const selectedBorough = e.target.value;
                   if (BOROUGHS.includes(selectedBorough as Borough)) {
@@ -122,15 +124,13 @@ const SideBar = () => {
         <div className="w-full min-h-full relative">
           <Outlet></Outlet>
 
-          <div className="absolute top-3 right-3 z-10">
-            <button
-              className="p-2 border border-neutral-200 bg-neutral-50 hover:bg-white"
-              onClick={() => navigate("/")}
-            >
-              Back to Home
-            </button>
-          </div>
-
+<div className="absolute top-3 right-3 z-10">
+<Link to="/">
+    <button className="p-2 border border-neutral-200 bg-neutral-50 hover:bg-white">
+      Back to Home
+    </button>
+  </Link>
+</div>
           <div className="absolute top-2 left-2 border border-neutral-200 flex gap-2 p-1 bg-neutral-100 z-10">
             <button
               className={`${
