@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import type { Idea } from "~/types";
+import { toTitleCase } from "~/utils";
 
 export interface SidebarIdeaProps {
   idea: Idea;
@@ -20,7 +21,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
       <h1 className="text-lg font-bold">{idea.solution}</h1>
 
       <div className="flex gap-4 w-full">
-        <span className="border border-neutral-200 p-1 rounded-full text-sm">{idea.borough}</span>
+        <span className="border border-neutral-200 p-1 rounded-full text-sm">{toTitleCase(idea.borough)}</span>
         <span className="border border-neutral-200 p-1 rounded-full text-sm">
           {idea.status === null
             ? "Did Not Advance"
