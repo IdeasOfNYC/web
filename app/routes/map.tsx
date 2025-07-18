@@ -8,7 +8,7 @@ import {
 } from "react";
 import { SplitViewer } from "~/components/SplitViewer";
 import { IdeaContext } from "~/context/IdeaContext";
-import { BOROUGHS, type Borough } from "~/types";
+import { BOROUGHS, type Borough, type Idea } from "~/types";
 
 interface Midpoint {
   x: number;
@@ -30,6 +30,8 @@ const Map = () => {
   const [categorization, setCategorization] = useState<"stage" | "impact">(
     "stage"
   );
+
+  const [selectedIdeas, setSelectedIdeas] = useState<Idea[] | null>(null);
 
   const { ideaFilter, setIdeaFilter, filteredIdeas, allIdeas } =
     useContext(IdeaContext);
@@ -119,40 +121,77 @@ const Map = () => {
     [filteredIdeas]
   );
 
+  useEffect(() => {
+    if (ideaFilter.borough) {
+      switch (ideaFilter.borough) {
+        case "staten island":
+          setSelectedIdeas(statenIslandIdeas);
+          break;
+        case "brooklyn":
+          setSelectedIdeas(brooklynIdeas);
+          break;
+        case "queens":
+          setSelectedIdeas(queensIdeas);
+          break;
+        case "manhattan":
+          setSelectedIdeas(manhattanIdeas);
+          break;
+        case "bronx":
+          setSelectedIdeas(bronxIdeas);
+          break;
+        default:
+          setSelectedIdeas(null);
+      }
+    } else {
+      setSelectedIdeas(null);
+    }
+  }, [
+    ideaFilter.borough,
+    statenIslandIdeas,
+    brooklynIdeas,
+    queensIdeas,
+    manhattanIdeas,
+    bronxIdeas,
+  ]);
+
   return (
     <div
       className="w-full h-full flex items-center justify-center relative"
       ref={containerRef}
     >
-      <div className="absolute bottom-8 right-8">
-        <SplitViewer
-          ideas={allIdeas ? allIdeas : []}
-          showLabels={true}
-        ></SplitViewer>
+      <div className="absolute bottom-8 right-8 flex flex-col gap-2">
+        {selectedIdeas ? <SplitViewer ideas={selectedIdeas} /> : <></>}
+        <SplitViewer ideas={allIdeas ? allIdeas : []} showLabels={true} />
       </div>
-      {midpoints.map((midpoint) => (
-        <div
-          key={midpoint.name}
-          className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
-          style={{
-            left: `${midpoint.x}px`,
-            top: `${midpoint.y}px`,
-          }}
-          title={midpoint.name}
-        >
-          {midpoint.name === "staten island" && (
-            <SplitViewer ideas={statenIslandIdeas} />
-          )}
-          {midpoint.name === "brooklyn" && (
-            <SplitViewer ideas={brooklynIdeas} />
-          )}
-          {midpoint.name === "queens" && <SplitViewer ideas={queensIdeas} />}
-          {midpoint.name === "manhattan" && (
-            <SplitViewer ideas={manhattanIdeas} />
-          )}
-          {midpoint.name === "bronx" && <SplitViewer ideas={bronxIdeas} />}
+      {ideaFilter.borough === null ? (
+        midpoints.map((midpoint) => (
+          <div
+            key={midpoint.name}
+            className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
+            style={{
+              left: `${midpoint.x}px`,
+              top: `${midpoint.y}px`,
+            }}
+            title={midpoint.name}
+          >
+            {midpoint.name === "staten island" && (
+              <SplitViewer ideas={statenIslandIdeas} />
+            )}
+            {midpoint.name === "brooklyn" && (
+              <SplitViewer ideas={brooklynIdeas} />
+            )}
+            {midpoint.name === "queens" && <SplitViewer ideas={queensIdeas} />}
+            {midpoint.name === "manhattan" && (
+              <SplitViewer ideas={manhattanIdeas} />
+            )}
+            {midpoint.name === "bronx" && <SplitViewer ideas={bronxIdeas} />}
+          </div>
+        ))
+      ) : (
+        <div className="absolute left-1/2 top-1/2 -translate-1/2 bg-blue-300 w-32 h-32">
+          {}
         </div>
-      ))}
+      )}
 
       <div className="absolute w-full top-2 left-0 flex  justify-center items-center">
         <span className="flex gap-2 items-center border border-dotted border-neutral-300 p-1">
