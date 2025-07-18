@@ -1,7 +1,7 @@
 import { ExternalLinkIcon } from "lucide-react";
 import { Link } from "react-router";
 
-export default function IntroHeader() {
+export default function Landing() {
   return (
     <section className="flex flex-col items-center bg-neutral-50 min-h-screen relative justify-center">
       {/* nav area */}

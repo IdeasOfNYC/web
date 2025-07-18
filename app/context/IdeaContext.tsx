@@ -1,16 +1,25 @@
 import { createContext } from "react";
-import type { Borough, Idea, IdeaFilterFunction } from "~/types";
+import type { Idea, IdeaFilter } from "~/types";
 
 export interface IdeaContextType {
-  ideas: Idea[] | null;
-  setIdeaFilter: (newFilter: IdeaFilterFunction) => void;
-  targetBorough: Borough | null;
-  setTargetBorough: (newBorough: Borough | "All") => void;
+  allIdeas: Idea[] | null;
+  filteredIdeas: Idea[] | null;
+  setIdeaFilter: (newFitler: IdeaFilter) => void;
+  selectedIdea: Idea | null;
+  setSelectedIdea: (selection: Idea | null) => void;
+  ideaFilter: IdeaFilter;
 }
 
 export const IdeaContext = createContext<IdeaContextType>({
-  ideas: null,
+  allIdeas: null,
+  filteredIdeas: null,
+  ideaFilter: {
+    keyword: null,
+    borough: null,
+    impactArea: [],
+    stage: "submitted",
+  },
+  selectedIdea: null,
+  setSelectedIdea: () => {},
   setIdeaFilter: () => {},
-  targetBorough: null,
-  setTargetBorough: () => {},
 });
