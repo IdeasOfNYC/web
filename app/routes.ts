@@ -12,4 +12,5 @@ export default [
     route("/timeline", "routes/timeline.tsx"),
   ]),
   route("/sandbox", "routes/sandbox.tsx"),
+  route("/about", "routes/about.tsx"),
 ] satisfies RouteConfig;

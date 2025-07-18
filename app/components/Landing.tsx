@@ -14,13 +14,19 @@ export default function Landing() {
         {/* Center: Nav buttons */}
         <div className="flex-1 flex justify-center">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div className="flex gap-3 border border-dotted rounded bg-white border-neutral-400 px-4 py-1 text-base sm:text-lg text-neutral-600 font-light">
-              <button className="hover:text-neutral-800">
-                About the Process
-              </button>
-              <button className="hover:text-neutral-800">FAQs</button>
-              <button className="hover:text-neutral-800">Selected Ideas</button>
-            </div>
+<div className="flex gap-3 border border-dotted rounded-xl bg-white border-neutral-400 px-5 py-2 text-sm sm:text-base text-neutral-700 font-medium shadow-sm">
+  <Link to="/about">
+    <button className="px-3 py-1 hover:bg-neutral-100 rounded-md transition">About the Process</button>
+  </Link>
+  <Link to="/faq">
+    <button className="px-3 py-1 hover:bg-neutral-100 rounded-md transition">FAQs</button>
+  </Link>
+  <Link to="/selected">
+    <button className="px-3 py-1 hover:bg-neutral-100 rounded-md transition">Selected Ideas</button>
+  </Link>
+</div>
+
+
           </div>
         </div>
 
