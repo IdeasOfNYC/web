@@ -1,9 +1,9 @@
-import IntroHeader from "~/components/IntroHeader";
+import Landing from "~/components/Landing";
 
 export default function Home() {
   return (
     <main>
-      <IntroHeader />
+      <Landing />
     </main>
   );
 }

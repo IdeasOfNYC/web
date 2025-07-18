@@ -137,7 +137,7 @@ const SideBar = () => {
         <div className="w-full min-h-full relative">
           <Outlet></Outlet>
 
-          <div className="absolute top-3 right-3">
+          <div className="absolute top-3 right-3 z-10">
             <button
               className="p-2 border border-neutral-200 bg-neutral-50 hover:bg-white"
               onClick={() => navigate("/")}
