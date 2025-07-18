@@ -77,7 +77,7 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen">
         <div
-          className={`border border-r border-neutral-200 max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
+          className={`max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
         >
           <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
             <div className="flex gap-2 w-full">
@@ -90,7 +90,7 @@ const SideBar = () => {
                 }}
               ></Search>
               <select
-                className="w-min p-2 border border-neutral-200"
+                className="w-min p-2 border border-neutral-200 rounded-lg"
                 onChange={(e) => {
                   const selectedBorough = e.target.value;
                   if (BOROUGHS.includes(selectedBorough as Borough)) {
