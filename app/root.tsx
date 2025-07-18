@@ -49,6 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const [ideas, setIdeas] = useState<Idea[] | null>(null);
   const [filteredIdeas, setFilteredIdeas] = useState<Idea[] | null>(null);
+  const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
   const [ideaFilter, setIdeaFilter] = useState<IdeaFilter>({
     keyword: null,
     borough: null,
@@ -146,6 +147,8 @@ export default function App() {
         filteredIdeas: filteredIdeas,
         ideaFilter: ideaFilter,
         setIdeaFilter: setIdeaFilter,
+        selectedIdea: selectedIdea,
+        setSelectedIdea: setSelectedIdea,
       }}
     >
       <Outlet />

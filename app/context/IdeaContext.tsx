@@ -5,6 +5,8 @@ export interface IdeaContextType {
   allIdeas: Idea[] | null;
   filteredIdeas: Idea[] | null;
   setIdeaFilter: (newFitler: IdeaFilter) => void;
+  selectedIdea: Idea | null;
+  setSelectedIdea: (selection: Idea | null) => void;
   ideaFilter: IdeaFilter;
 }
 
@@ -17,5 +19,7 @@ export const IdeaContext = createContext<IdeaContextType>({
     impactArea: [],
     stage: "submitted",
   },
+  selectedIdea: null,
+  setSelectedIdea: () => {},
   setIdeaFilter: () => {},
 });

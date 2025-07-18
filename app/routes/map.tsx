@@ -6,6 +6,7 @@ import {
   useState,
   type RefObject,
 } from "react";
+import { IdeaScatter } from "~/components/IdeaScatter";
 import { SplitViewer } from "~/components/SplitViewer";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough, type Idea } from "~/types";
@@ -33,8 +34,13 @@ const Map = () => {
 
   const [selectedIdeas, setSelectedIdeas] = useState<Idea[] | null>(null);
 
-  const { ideaFilter, setIdeaFilter, filteredIdeas, allIdeas } =
-    useContext(IdeaContext);
+  const {
+    ideaFilter,
+    setIdeaFilter,
+    filteredIdeas,
+    allIdeas,
+    setSelectedIdea,
+  } = useContext(IdeaContext);
 
   const boroughs: { name: Borough; ref: RefObject<SVGPathElement | null> }[] =
     useMemo(
@@ -269,8 +275,11 @@ const Map = () => {
             </div>
           ))
         ) : (
-          <div className="absolute left-1/2 top-1/2 -translate-1/2 bg-blue-300 w-32 h-32">
-            {}
+          <div className="absolute left-1/2 top-1/2 -translate-1/2 ">
+            <IdeaScatter
+              ideas={filteredIdeas ? filteredIdeas : []}
+              handleSelection={setSelectedIdea}
+            ></IdeaScatter>
           </div>
         )}
 

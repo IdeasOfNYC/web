@@ -5,19 +5,18 @@ import { Search } from "~/components/Search";
 import { SidebarIdea } from "~/components/SidebarIdea";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
-import type { Idea } from "~/types";
 
 const SideBar = () => {
   const ideaContext = useContext(IdeaContext);
-  const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
+  const { filteredIdeas, selectedIdea, setSelectedIdea } = ideaContext;
   const [displayMode, setDisplayMode] = useState<"map" | "timeline">("map");
   const navigate = useNavigate();
   const PAGINATION_SIZE = 100;
   const [currentPage, setCurrentPage] = useState<number | null>(null);
 
   useEffect(() => {
-    if (ideaContext.filteredIdeas) setCurrentPage(0);
-  }, [ideaContext.filteredIdeas]);
+    if (filteredIdeas) setCurrentPage(0);
+  }, [filteredIdeas]);
 
   useEffect(() => {
     if (displayMode === "map") navigate("/map");
@@ -25,10 +24,10 @@ const SideBar = () => {
   }, [displayMode, navigate]);
 
   const MemoizedIdeas = useMemo(() => {
-    return ideaContext.filteredIdeas && currentPage !== null ? (
+    return filteredIdeas && currentPage !== null ? (
       <div className="flex flex-col gap-2 max-w-2xl">
         <>
-          {ideaContext.filteredIdeas
+          {filteredIdeas
             .slice(
               currentPage * PAGINATION_SIZE,
               (currentPage + 1) * PAGINATION_SIZE
@@ -53,13 +52,13 @@ const SideBar = () => {
           </button>
           <p className="text-nowrap">
             Page {currentPage + 1} of{" "}
-            {Math.floor(ideaContext.filteredIdeas.length / PAGINATION_SIZE)}
+            {Math.floor(filteredIdeas.length / PAGINATION_SIZE)}
           </p>
           <button
             className="w-min h-full flex items-center p-2 hover:bg-neutral-50 bg-white cursor-pointer border border-neutral-200"
             disabled={
               currentPage + 1 >=
-              Math.floor(ideaContext.filteredIdeas.length / PAGINATION_SIZE)
+              Math.floor(filteredIdeas.length / PAGINATION_SIZE)
             }
             onClick={() => setCurrentPage(currentPage + 1)}
           >
@@ -70,7 +69,7 @@ const SideBar = () => {
     ) : (
       <p>Loading Ideas...</p>
     );
-  }, [currentPage, ideaContext.filteredIdeas]);
+  }, [currentPage, filteredIdeas, setSelectedIdea]);
 
   if (ideaContext)
     return (
