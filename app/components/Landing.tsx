@@ -48,7 +48,7 @@ export default function Landing() {
         </div>
       </div>
       {/* hero section with paper background */}
-      <div className="relative w-full xl:max-w-[1150px] max-w-[1000px] flex flex-col items-center justify-center xl:pt-8 pt-16">
+      <div className="relative w-full xl:max-w-[1100px] max-w-[900px] flex flex-col items-center justify-center pt-12">
         {/* paper */}
         <img
           src="/landingBackground.png"
@@ -56,7 +56,7 @@ export default function Landing() {
         />
 
         {/* main text with CTA */}
-        <div className="absolute top-0 z-10 pt-36 flex flex-col gap-16 animate-fade-in">
+        <div className="absolute top-0 z-10 pt-36 flex flex-col xl:gap-16 gap-8 animate-fade-in">
           {/* intro text */}
           <div className="text-center flex flex-col items-center gap-4">
             <h1 className="text-4xl font-bold leading-tight font-display mb-4">
