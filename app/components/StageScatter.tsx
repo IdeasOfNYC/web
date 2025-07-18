@@ -2,12 +2,12 @@ import { useMemo, useState, useEffect, useRef, type FC } from "react";
 import type { Idea } from "~/types";
 import { truncate } from "~/utils";
 
-export interface IdeaScatterProps {
+export interface StageScatterProps {
   ideas: Idea[];
   handleSelection: (Idea: Idea) => void;
 }
 
-export const IdeaScatter: FC<IdeaScatterProps> = ({
+export const StageScatter: FC<StageScatterProps> = ({
   ideas,
   handleSelection,
 }) => {
@@ -60,7 +60,7 @@ export const IdeaScatter: FC<IdeaScatterProps> = ({
             onMouseEnter={() => setHoveredIdea(idea)}
             onMouseLeave={() => setHoveredIdea(null)}
             onClick={() => handleSelection(idea)}
-            className={`w-2 h-2 rounded-full hover:scale-200 cursor-pointer ${
+            className={`w-2.5 h-2.5 rounded-full hover:scale-200 cursor-pointer ${
               idea.status
                 ? idea.status.FinalBallot
                   ? "bg-cyan-300 hover:border hover:border-cyan-500"

@@ -101,3 +101,67 @@ export const truncate = (str: string, charLimit: number) => {
   }
   return str.slice(0, charLimit) + "...";
 };
+
+/**
+ * Interface for splitting ideas by impact area.
+ * @property {Object.<string, Idea[]>} [key: string] - A dictionary where keys are impact area names and values are arrays of ideas belonging to that impact area.
+ */
+export interface IASplits {
+  [key: string]: Idea[];
+}
+
+/**
+ * Splits a list of ideas into groups based on their impact areas.
+ * Each idea can belong to multiple impact areas.
+ *
+ * @param {Idea[]} ideas - An array of Idea objects to be categorized.
+ * @returns {IASplits} An object where keys are trimmed impact area strings and values are arrays of Idea objects associated with that impact area.
+ */
+export const getIASplits = (ideas: Idea[]): IASplits => {
+  const splits: IASplits = {};
+  ideas.forEach((idea) => {
+    if (idea.impactArea && idea.impactArea.length > 0) {
+      idea.impactArea.forEach((area: string) => {
+        const trimmedArea = area.trim();
+        if (trimmedArea) {
+          if (!splits[trimmedArea]) {
+            splits[trimmedArea] = [];
+          }
+          splits[trimmedArea].push(idea);
+        }
+      });
+    }
+  });
+  return splits;
+};
+
+/**
+ * Provides a Tailwind CSS background color class based on the given impact area string.
+ *
+ * @param {string} impactArea - The name of the impact area.
+ * @returns {string} A Tailwind CSS class string for background color.
+ */
+export const IAColorMap = (impactArea: string): string => {
+  switch (impactArea) {
+    case "Social Services & Accessiblity":
+      return "bg-blue-300";
+    case "Education":
+      return "bg-green-300";
+    case "Health & Wellbeing":
+      return "bg-purple-300";
+    case "Workforce Development":
+      return "bg-yellow-300";
+    case "Environment & Public Space":
+      return "bg-teal-300";
+    case "Public Safety":
+      return "bg-red-300";
+    case "Arts & Culture":
+      return "bg-pink-300";
+    case "Civic Engagement":
+      return "bg-indigo-300";
+    case "Other":
+      return "bg-gray-300";
+    default:
+      return "bg-black";
+  }
+};

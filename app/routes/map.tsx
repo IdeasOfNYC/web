@@ -8,10 +8,11 @@ import {
   type RefObject,
 } from "react";
 import { IACircles } from "~/components/IACircles";
-import { IdeaScatter } from "~/components/IdeaScatter";
+import { StageScatter } from "~/components/StageScatter";
 import { StageCircles } from "~/components/StageCircles";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough, type Idea } from "~/types";
+import { IAScatter } from "~/components/IAScatter";
 
 interface Midpoint {
   x: number;
@@ -313,11 +314,18 @@ const Map = () => {
             </div>
           ))
         ) : (
-          <div className="absolute left-1/2 top-1/2 -translate-1/2 ">
-            <IdeaScatter
-              ideas={filteredIdeas ? filteredIdeas : []}
-              handleSelection={setSelectedIdea}
-            ></IdeaScatter>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 ">
+            {categorization === "stage" ? (
+              <StageScatter
+                ideas={filteredIdeas ? filteredIdeas : []}
+                handleSelection={setSelectedIdea}
+              ></StageScatter>
+            ) : (
+              <IAScatter
+                ideas={filteredIdeas ? filteredIdeas : []}
+                handleSelection={setSelectedIdea}
+              ></IAScatter>
+            )}
           </div>
         )}
 
