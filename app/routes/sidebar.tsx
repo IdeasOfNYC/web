@@ -78,21 +78,7 @@ const SideBar = () => {
         <div
           className={`border border-r border-neutral-200 max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
         >
-          {selectedIdea ? (
-            <button
-              className="w-min h-full flex items-center p-2 hover:bg-neutral-50 bg-white cursor-pointer"
-              onClick={() => setSelectedIdea(null)}
-            >
-              <span className="w-16">{">>"}</span>
-            </button>
-          ) : (
-            <></>
-          )}
-          <div
-            className={`flex-col gap-2 p-2 h-full w-full ${
-              selectedIdea ? "hidden" : "flex"
-            }`}
-          >
+          <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
             <div className="flex gap-2 w-full">
               <Search
                 handleSearchTermChange={(newTerm) => {
