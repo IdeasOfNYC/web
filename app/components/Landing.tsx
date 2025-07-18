@@ -20,11 +20,7 @@ export default function Landing() {
                   About the Process
                 </button>
               </Link>
-              <Link to="/faq">
-                <button className="px-3 py-1 hover:bg-neutral-100 rounded-sm">
-                  FAQs
-                </button>
-              </Link>
+  
               <Link to="/selected">
                 <button className="px-3 py-1 hover:bg-neutral-100 rounded-sm">
                   Selected Ideas

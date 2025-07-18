@@ -13,4 +13,5 @@ export default [
   ]),
   route("/sandbox", "routes/sandbox.tsx"),
   route("/about", "routes/about.tsx"),
+  route("/selected", "routes/selected.tsx"),
 ] satisfies RouteConfig;
