@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { Idea } from "~/types";
-import { toTitleCase } from "~/utils";
+import { toTitleCase, getAdvancementStyles } from "~/utils";
 
 export interface IdeaPanelProps {
   idea: Idea;
@@ -20,7 +20,7 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
 
       <div className="flex gap-4 w-full">
         <span className="border border-neutral-200 p-1 rounded-full text-sm">{toTitleCase(idea.borough)}</span>
-        <span className="border border-neutral-200 p-1 rounded-full text-sm">
+        <span className={`p-1 rounded-full text-sm ${getAdvancementStyles(idea.status)}`}>
           {idea.status === null
             ? "Did Not Advance"
             : idea.status.Final20Ideas
