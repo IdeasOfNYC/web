@@ -132,7 +132,7 @@ const SideBar = () => {
             </button>
           </div>
 
-          <div className="absolute top-2 left-2 border border-neutral-200 flex gap-2 p-1 bg-neutral-100">
+          <div className="absolute top-2 left-2 border border-neutral-200 flex gap-2 p-1 bg-neutral-100 z-10">
             <button
               className={`${
                 displayMode === "map"
