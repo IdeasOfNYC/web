@@ -139,7 +139,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       {/* Impact Area */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Impact Area:</label>
-        <div className="max-h-32 overflow-y-auto space-y-1">
+        <div className="max-h-32 overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-1">
           <label className="flex items-center text-sm">
             <input
               type="checkbox"
@@ -170,7 +170,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       {/* Audience */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Audience:</label>
-        <div className="max-h-32 overflow-y-auto space-y-1">
+        <div className="max-h-32 overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-1">
           <label className="flex items-center text-sm">
             <input
               type="checkbox"
@@ -199,7 +199,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       </div>
 
       {/* Buttons */}
-      <div className="flex gap-2 pt-2 border-t">
+      <div className="flex gap-2 pt-2">
         <button 
           onClick={handleApply} 
           className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600"
