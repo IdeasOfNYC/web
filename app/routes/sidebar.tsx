@@ -7,7 +7,6 @@ import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
 import { Link } from "react-router";
 
-
 const SideBar = () => {
   const ideaContext = useContext(IdeaContext);
   const { filteredIdeas, selectedIdea, setSelectedIdea } = ideaContext;
@@ -75,7 +74,7 @@ const SideBar = () => {
 
   if (ideaContext)
     return (
-      <div className="flex w-full max-h-screen h-screen">
+      <div className="flex w-full max-h-screen h-screen bg-neutral-50">
         <div
           className={`max-h-full overflow-y-scroll flex flex-col gap-2 min-w h-full`}
         >
@@ -124,13 +123,13 @@ const SideBar = () => {
         <div className="w-full min-h-full relative">
           <Outlet></Outlet>
 
-<div className="absolute top-3 right-3 z-10">
-<Link to="/">
-    <button className="p-2 border border-neutral-200 bg-neutral-50 hover:bg-white">
-      Back to Home
-    </button>
-  </Link>
-</div>
+          <div className="absolute top-3 right-3 z-10">
+            <Link to="/">
+              <button className="p-2 border border-neutral-200 bg-neutral-50 hover:bg-white">
+                Back to Home
+              </button>
+            </Link>
+          </div>
           <div className="absolute top-2 left-2 border border-neutral-200 flex gap-2 p-1 bg-neutral-100 z-10">
             <button
               className={`${
