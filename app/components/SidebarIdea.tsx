@@ -20,8 +20,8 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
       <h1 className="text-lg font-bold">{idea.solution}</h1>
 
       <div className="flex gap-4 w-full">
-        <span className="border border-neutral-200 p-1">{idea.borough}</span>
-        <span className="border border-neutral-200 p-1">
+        <span className="border border-neutral-200 p-1 rounded-full text-sm">{idea.borough}</span>
+        <span className="border border-neutral-200 p-1 rounded-full text-sm">
           {idea.status === null
             ? "Did Not Advance"
             : idea.status.Final20Ideas
@@ -41,7 +41,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
                 .slice(0, MAX_TRUNCATE_THRESHOLD)
                 .map((someImpactArea, idx) => (
                   <span
-                    className="border border-neutral-200 p-1 text-nowrap h-min"
+                    className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
                     key={idx}
                   >
                     {someImpactArea}
@@ -49,7 +49,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
                 ))}
             </>
             {idea.impactArea.length - MAX_TRUNCATE_THRESHOLD > 0 ? (
-              <span className="border border-neutral-200 p-1 text-nowrap h-min">
+              <span className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm">
                 {`+${idea.impactArea.length - 2} More...`}
               </span>
             ) : (
@@ -68,7 +68,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
                 .slice(0, MAX_TRUNCATE_THRESHOLD)
                 .map((someImpactArea, idx) => (
                   <span
-                    className="border border-neutral-200 p-1 text-nowrap h-min"
+                    className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
                     key={idx}
                   >
                     {someImpactArea}
@@ -76,7 +76,7 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
                 ))}
             </>
             {idea.audience.length - MAX_TRUNCATE_THRESHOLD > 0 ? (
-              <span className="border border-neutral-200 p-1 text-nowrap h-min">
+              <span className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm">
                 {`+${idea.audience.length - 2} More...`}
               </span>
             ) : (

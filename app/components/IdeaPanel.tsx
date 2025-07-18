@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import type { Idea } from "~/types";
+import { toTitleCase } from "~/utils";
 
 export interface IdeaPanelProps {
   idea: Idea;
@@ -18,8 +19,8 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
       <h1 className="text-lg font-bold">{idea.solution}</h1>
 
       <div className="flex gap-4 w-full">
-        <span className="border border-neutral-200 p-1">{idea.borough}</span>
-        <span className="border border-neutral-200 p-1">
+        <span className="border border-neutral-200 p-1 rounded-full text-sm">{toTitleCase(idea.borough)}</span>
+        <span className="border border-neutral-200 p-1 rounded-full text-sm">
           {idea.status === null
             ? "Did Not Advance"
             : idea.status.Final20Ideas
@@ -36,7 +37,7 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
           <div className="flex flex-wrap gap-2 max-w-96">
             {idea.impactArea.map((someImpactArea, idx) => (
               <span
-                className="border border-neutral-200 p-1 text-nowrap h-min"
+                className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
                 key={idx}
               >
                 {someImpactArea}
@@ -52,7 +53,7 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
           <div className="flex flex-wrap gap-2 max-w-96">
             {idea.audience.map((someAudience, idx) => (
               <span
-                className="border border-neutral-200 p-1 text-nowrap h-min"
+                className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
                 key={idx}
               >
                 {someAudience}
