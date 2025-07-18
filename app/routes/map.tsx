@@ -274,7 +274,7 @@ const Map = () => {
           midpoints.map((midpoint) => (
             <div
               key={midpoint.name}
-              className="absolute -translate-x-1/2 -translate-y-1/2 "
+              className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none"
               style={{
                 left: `${midpoint.x}px`,
                 top: `${midpoint.y}px`,

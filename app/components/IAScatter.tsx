@@ -48,7 +48,7 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
   }, [ideas]);
 
   return (
-    <div className=" p-4 border border-neutral-500 border-dashed relative rounded-md flex flex-col bg-white/50 items-center gap-2">
+    <div className=" p-4 border border-neutral-500 border-dashed relative rounded-md flex flex-col bg-white items-center gap-2">
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
