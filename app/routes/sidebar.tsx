@@ -78,7 +78,7 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen bg-neutral-50">
         <div
-          className={`max-h-full overflow-y-scroll flex flex-col gap-2 w-96 flex-shrink-0 h-full`}
+          className={`max-h-full overflow-y-scroll flex flex-col gap-2 w-80 lg:w-96 xl:w-[30rem] flex-shrink-0 h-full`}
         >
           <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
             <div className="flex gap-1 w-full">
