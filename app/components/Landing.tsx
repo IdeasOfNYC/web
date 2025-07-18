@@ -3,15 +3,12 @@ import { Link } from "react-router";
 
 export default function Landing() {
   return (
-    <section className="flex flex-col items-center bg-neutral-50 min-h-screen relative overflow-hidden">
-      {/* NAVBAR */}
-      <div className="fixed top-0 z-50 w-full bg-neutral-50 px-4 py-2 flex flex-wrap justify-between items-center border-b border-neutral-200 gap-y-2">
-        {/* Left: Logo */}
-        <div className="flex items-center gap-2 min-w-[120px]">
-          <img src="image copy 2.png" className="h-12 w-auto" alt="logo" />
-          <div className="font-display font-bold text-base sm:text-lg">
-            IoNYC
-          </div>
+    <section className="flex flex-col items-center bg-neutral-50 h-screen relative pt-10 overflow-hidden">
+      {/* nav area */}
+      <div className="flex w-full px-4 justify-between items-center absolute top-2">
+        <div className="flex flex-row w-96 items-center gap-1">
+          <img src="image copy 2.png" className="h-15" alt="" />
+          <div className="flex justify-start font-display font-bold">IoNYC</div>
         </div>
 
         {/* Center: Nav buttons */}

@@ -101,3 +101,16 @@ export const truncate = (str: string, charLimit: number) => {
   }
   return str.slice(0, charLimit) + "...";
 };
+// hello this is the colour thing
+export const getAdvancementStyles = (status: Option<BAStatus>): string => {
+  if (status === null) {
+    // Did Not Advance: failure red
+    return "bg-red-100 border-red-200 text-red-800";
+  } else if (status.Final20Ideas) {
+    // finalist: bloo
+    return "bg-blue-100 border-blue-200 text-blue-800";
+  } else {
+    // Advanced to BA: greeeeen shade
+    return "bg-green-100 border-green-200 text-green-800";
+  }
+};
