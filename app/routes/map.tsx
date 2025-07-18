@@ -49,6 +49,8 @@ const Map = () => {
     );
 
   useEffect(() => {
+    let animationFrameId: number;
+
     const calculateMidpoints = () => {
       const newMidpoints: Midpoint[] = [];
 
@@ -85,7 +87,17 @@ const Map = () => {
       setMidpoints(newMidpoints);
     };
 
-    calculateMidpoints();
+    const startCalculatingMidpoints = () => {
+      calculateMidpoints();
+      animationFrameId = requestAnimationFrame(startCalculatingMidpoints);
+    };
+
+    const stopCalculatingMidpoints = () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+
+    calculateMidpoints(); // Initial calculation
+
     const observer = new ResizeObserver(() => {
       calculateMidpoints();
     });
@@ -94,8 +106,25 @@ const Map = () => {
       observer.observe(containerRef.current);
     }
 
+    const svgElement = svgRef.current;
+    if (svgElement) {
+      svgElement.addEventListener("transitionstart", startCalculatingMidpoints);
+      svgElement.addEventListener("transitionend", stopCalculatingMidpoints);
+    }
+
     return () => {
       observer.disconnect();
+      if (svgElement) {
+        svgElement.removeEventListener(
+          "transitionstart",
+          startCalculatingMidpoints
+        );
+        svgElement.removeEventListener(
+          "transitionend",
+          stopCalculatingMidpoints
+        );
+      }
+      cancelAnimationFrame(animationFrameId);
     };
   }, [boroughs]);
 
@@ -154,14 +183,53 @@ const Map = () => {
     bronxIdeas,
   ]);
 
+  // scaling the svg so that selected borough is at center of screen
+  useEffect(() => {
+    const svgElement = svgRef.current;
+    const containerElement = containerRef.current;
+
+    if (!svgElement || !containerElement) {
+      return;
+    }
+
+    if (ideaFilter.borough) {
+      const selectedBoroughPath = boroughs.find(
+        (b) => b.name === ideaFilter.borough
+      )?.ref.current;
+
+      if (selectedBoroughPath) {
+        const pathBBox = selectedBoroughPath.getBBox();
+        const svgBBox = svgElement.getBBox();
+
+        const pathMidX = pathBBox.x + pathBBox.width / 2;
+        const pathMidY = pathBBox.y + pathBBox.height / 2;
+
+        const svgMidX = svgBBox.x + svgBBox.width / 2;
+        const svgMidY = svgBBox.y + svgBBox.height / 2;
+
+        const translateX = ((svgMidX - pathMidX) / svgBBox.width) * 100;
+        const translateY = ((svgMidY - pathMidY) / svgBBox.height) * 100;
+
+        svgElement.style.transform = `translate(${translateX}%, ${translateY}%) scale(2)`;
+        svgElement.style.transformOrigin = `${pathMidX}px ${pathMidY}px`;
+      }
+    } else {
+      // Clear transformations when no borough is selected
+      svgElement.style.transform = "";
+      svgElement.style.transformOrigin = "";
+    }
+  }, [ideaFilter.borough, boroughs]);
+
   return (
     <div
-      className="w-full h-full flex items-center justify-center relative"
+      className="w-full h-full flex items-center justify-center relative overflow-hidden"
       ref={containerRef}
     >
       <div className="absolute bottom-8 right-8 flex flex-col gap-2">
-        {selectedIdeas ? <SplitViewer ideas={selectedIdeas} /> : <></>}
-        <SplitViewer ideas={allIdeas ? allIdeas : []} showLabels={true} />
+        <SplitViewer
+          ideas={selectedIdeas ? selectedIdeas : allIdeas ? allIdeas : []}
+          showLabels={true}
+        />
       </div>
       {ideaFilter.borough === null ? (
         midpoints.map((midpoint) => (
@@ -234,6 +302,9 @@ const Map = () => {
         viewBox="0 0 687 686"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="transition-all duration-1000 ease-in-out -z-10"
+
+        // add an event listener to transitionstart and stop to run calculate midpoints using an animation frame. cancel the frame when the transition ends
       >
         {/* staten island */}
         <path
