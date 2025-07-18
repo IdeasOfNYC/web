@@ -66,19 +66,19 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
           <div className="flex gap-2">
             <>
               {idea.audience
-                .slice(0, MAX_TRUNCATE_THRESHOLD)
-                .map((someImpactArea, idx) => (
+                .slice(0, 1)
+                .map((someAudience, idx) => (
                   <span
                     className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
                     key={idx}
                   >
-                    {someImpactArea}
+                    {someAudience}
                   </span>
                 ))}
             </>
-            {idea.audience.length - MAX_TRUNCATE_THRESHOLD > 0 ? (
+            {idea.audience.length > 1 ? (
               <span className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm">
-                {`+${idea.audience.length - 2} More...`}
+                {`+${idea.audience.length - 1} More...`}
               </span>
             ) : (
               <></>
