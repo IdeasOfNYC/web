@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router";
 import { IdeaPanel } from "~/components/IdeaPanel";
 import { Search } from "~/components/Search";
 import { SidebarIdea } from "~/components/SidebarIdea";
+import { FilterPopup } from "~/components/FilterPopup";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough } from "~/types";
 import { Link } from "react-router";
@@ -14,6 +15,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   const PAGINATION_SIZE = 100;
   const [currentPage, setCurrentPage] = useState<number | null>(null);
+  const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(false);
 
   useEffect(() => {
     if (filteredIdeas) setCurrentPage(0);
@@ -88,34 +90,18 @@ const SideBar = () => {
                   });
                 }}
               ></Search>
-              <select
-                className="w-min p-2 border border-neutral-200 rounded-lg"
-                onChange={(e) => {
-                  const selectedBorough = e.target.value;
-                  if (BOROUGHS.includes(selectedBorough as Borough)) {
-                    ideaContext.setIdeaFilter({
-                      ...ideaContext.ideaFilter,
-                      borough: selectedBorough.toLowerCase() as Borough,
-                    });
-                  } else if (selectedBorough === "All")
-                    ideaContext.setIdeaFilter({
-                      ...ideaContext.ideaFilter,
-                      borough: null,
-                    });
-                }}
-                value={
-                  ideaContext.ideaFilter.borough
-                    ? ideaContext.ideaFilter.borough
-                    : "All"
-                }
-              >
-                <option value="All">All Boroughs</option>
-                {BOROUGHS.map((borough) => (
-                  <option key={borough} value={borough}>
-                    {borough.charAt(0).toUpperCase() + borough.slice(1)}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <button
+                  className="w-min p-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50"
+                  onClick={() => setIsFilterPopupOpen(true)}
+                >
+                  Filter ▼
+                </button>
+                <FilterPopup
+                  isOpen={isFilterPopupOpen}
+                  onClose={() => setIsFilterPopupOpen(false)}
+                />
+              </div>
             </div>
             {MemoizedIdeas}
           </div>

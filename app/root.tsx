@@ -54,6 +54,7 @@ export default function App() {
     keyword: null,
     borough: null,
     impactArea: [],
+    audience: [],
     stage: "submitted",
   });
 
@@ -68,8 +69,11 @@ export default function App() {
       const boroughFilter = ideaFilter.borough
         ? idea.borough === ideaFilter.borough
         : true;
-      const impactAreaFilter = ideaFilter.impactArea.every((someImpactArea) => {
-        idea.impactArea.includes(someImpactArea);
+      const impactAreaFilter = ideaFilter.impactArea.length === 0 || ideaFilter.impactArea.every((someImpactArea) => {
+        return idea.impactArea.includes(someImpactArea);
+      });
+      const audienceFilter = ideaFilter.audience.length === 0 || ideaFilter.audience.every((someAudience) => {
+        return idea.audience.includes(someAudience);
       });
       const keywordFilter = ideaFilter.keyword
         ? idea.solution
@@ -82,11 +86,12 @@ export default function App() {
           : false) ||
         (ideaFilter.stage === "BA" && idea.status ? true : false) ||
         ideaFilter.stage === "submitted";
-      return boroughFilter && impactAreaFilter && keywordFilter && stageFilter;
+      return boroughFilter && impactAreaFilter && audienceFilter && keywordFilter && stageFilter;
     },
     [
       ideaFilter.borough,
       ideaFilter.impactArea,
+      ideaFilter.audience,
       ideaFilter.keyword,
       ideaFilter.stage,
     ]

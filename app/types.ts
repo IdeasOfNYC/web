@@ -52,6 +52,7 @@ export interface IdeaFilter {
   keyword: Option<string>;
   borough: Option<Borough>;
   impactArea: string[];
+  audience: string[];
   stage: IdeaStage;
 }
 
