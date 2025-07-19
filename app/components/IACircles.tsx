@@ -58,7 +58,7 @@ export const IACircles: FC<IACirclesProps> = ({
         <div
           className={`rounded-full bg-white flex items-center justify-center text-neutral-500 font-medium text-sm w-8 h-8 min-w-8 min-h-8 border border-neutral-400 `}
         >
-          {Object.entries(splits).length - 3}+
+          {Math.max(0, Object.entries(splits).length - 3)}+
         </div>
       )}
     </div>
