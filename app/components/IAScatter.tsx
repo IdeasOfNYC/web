@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect, useRef, type FC } from "react";
 import type { Idea } from "~/types";
 import { truncate, getIASplits, IAColorMap } from "~/utils";
+import { ScatterCircle } from "./ScatterCircle";
 
 export interface IAScatterProps {
   ideas: Idea[];
@@ -52,17 +53,15 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="grid grid-cols-50 relative">
+      <div ref={parentRef} className="flex flex-wrap relative">
         {ideasByIA.map(({ idea, impactAreaName }, idx) => (
-          <button
+          <ScatterCircle
             onMouseEnter={() => setHoveredIdea(idea)}
             onMouseLeave={() => setHoveredIdea(null)}
             onClick={() => handleSelection(idea)}
-            className={`w-2.5 h-2.5 rounded-full hover:scale-200 cursor-pointer ${IAColorMap(
-              impactAreaName
-            )} hover:border hover:border-white `}
+            className={IAColorMap(impactAreaName)}
             key={idx}
-          ></button>
+          />
         ))}
         {hoveredIdea ? (
           <p

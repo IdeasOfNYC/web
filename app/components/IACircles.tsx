@@ -5,19 +5,33 @@ import { getIASplits, type IASplits, IAColorMap } from "~/utils";
 export interface IACirclesProps {
   ideas: Idea[];
   expanded?: boolean;
+  horizontal?: boolean;
 }
 
-export const IACircles: FC<IACirclesProps> = ({ ideas, expanded = false }) => {
+export const IACircles: FC<IACirclesProps> = ({
+  ideas,
+  expanded = false,
+  horizontal = false,
+}) => {
   const splits: IASplits = useMemo(() => getIASplits(ideas), [ideas]);
 
   return (
-    <div className="rounded-md border-dashed border border-neutral-300 bg-white/50 p-4 flex flex-col items-start justify-center space-y-4 w-min pointer-events-none">
+    <div
+      className={`rounded-md border-dashed border border-neutral-300 bg-white/50 p-4 flex ${
+        horizontal ? "flex-row w-full" : "flex-col w-min"
+      } items-start justify-center gap-4 pointer-events-none flex-wrap`}
+    >
       {/* sort the entries based on how long each entry value's length is */}
       {Object.entries(splits)
         .sort(([, ideasA], [, ideasB]) => ideasB.length - ideasA.length)
         .slice(0, expanded ? Object.entries(splits).length : 3)
         .map(([impactArea, ideasInArea]) => (
-          <div key={impactArea} className="flex items-center gap-2">
+          <div
+            key={impactArea}
+            className={`flex ${
+              horizontal ? "items-start" : "items-center"
+            } gap-2`}
+          >
             <div
               className={`rounded-full ${IAColorMap(
                 impactArea
