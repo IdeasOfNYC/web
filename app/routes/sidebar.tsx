@@ -5,13 +5,14 @@ import { Search } from "~/components/Search";
 import { SidebarIdea } from "~/components/SidebarIdea";
 import { FilterPopup } from "~/components/FilterPopup";
 import { IdeaContext } from "~/context/IdeaContext";
-import { BOROUGHS, type Borough } from "~/types";
 import { Link } from "react-router";
 
 const SideBar = () => {
   const ideaContext = useContext(IdeaContext);
   const { filteredIdeas, selectedIdea, setSelectedIdea } = ideaContext;
-  const [displayMode, setDisplayMode] = useState<"map" | "timeline">("map");
+  const [displayMode, setDisplayMode] = useState<"map" | "timeline">(
+    window.location.pathname.endsWith("/map") ? "map" : "timeline"
+  );
   const navigate = useNavigate();
   const PAGINATION_SIZE = 100;
   const [currentPage, setCurrentPage] = useState<number | null>(null);

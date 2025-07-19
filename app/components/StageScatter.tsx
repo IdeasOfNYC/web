@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect, useRef, type FC } from "react";
 import type { Idea } from "~/types";
 import { truncate } from "~/utils";
+import { ScatterCircle } from "./ScatterCircle";
 
 export interface StageScatterProps {
   ideas: Idea[];
@@ -54,21 +55,21 @@ export const StageScatter: FC<StageScatterProps> = ({
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="grid grid-cols-50 relative">
+      <div ref={parentRef} className="flex flex-wrap relative">
         {ideasByStage.map((idea, idx) => (
-          <button
+          <ScatterCircle
             onMouseEnter={() => setHoveredIdea(idea)}
             onMouseLeave={() => setHoveredIdea(null)}
             onClick={() => handleSelection(idea)}
-            className={`w-2.5 h-2.5 rounded-full hover:scale-200 cursor-pointer ${
+            className={
               idea.status
                 ? idea.status.FinalBallot
                   ? "bg-cyan-300 hover:border hover:border-cyan-500"
                   : "bg-green-300 hover:border hover:border-green-500"
                 : "bg-amber-300 hover:border hover:border-amber-500"
-            }`}
+            }
             key={idx}
-          ></button>
+          />
         ))}
         {hoveredIdea ? (
           <p
