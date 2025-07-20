@@ -35,42 +35,59 @@ export const StageScatter: FC<StageScatterProps> = ({
     };
   }, [hoveredIdea]);
 
-  const ideasByStage = useMemo<Idea[]>(() => {
-    return ideas.sort((a, b) => {
-      if (a.status && b.status) {
-        if (
-          (a.status.FinalBallot && b.status.FinalBallot) ||
-          !(a.status.FinalBallot || b.status.FinalBallot)
-        )
-          return 0;
-        else if (a.status.FinalBallot) return 1;
-        else return -1;
-      } else if (a.status) return 1;
-      else if (b.status) return -1;
-      else return 0;
-    });
-  }, [ideas]);
+  const submittedIdeas = useMemo<Idea[]>(
+    () => ideas.filter((idea) => idea.status === null),
+    [ideas]
+  );
+  const BAIdeas = useMemo<Idea[]>(
+    () => ideas.filter((idea) => idea.status !== null),
+    [ideas]
+  );
+  const ballotIdeas = useMemo<Idea[]>(
+    () => ideas.filter((idea) => idea.status?.FinalBallot),
+    [ideas]
+  );
+
   return (
     <div className=" p-4 border border-neutral-500 border-dashed relative rounded-md flex flex-col bg-white items-center gap-2">
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="flex flex-wrap relative gap-0.5">
-        {ideasByStage.map((idea, idx) => (
-          <ScatterCircle
-            onMouseEnter={() => setHoveredIdea(idea)}
-            onMouseLeave={() => setHoveredIdea(null)}
-            onClick={() => handleSelection(idea)}
-            className={
-              idea.status
-                ? idea.status.FinalBallot
-                  ? "bg-cyan3 hover:border hover:border-white"
-                  : "bg-green3 hover:border hover:border-white"
-                : "bg-yellow2 hover:border hover:border-white"
-            }
-            key={idx}
-          />
-        ))}
+      <div ref={parentRef} className="flex flex-col gap-2 relative">
+        <div className="flex flex-wrap">
+          {submittedIdeas.map((idea, idx) => (
+            <ScatterCircle
+              onMouseEnter={() => setHoveredIdea(idea)}
+              onMouseLeave={() => setHoveredIdea(null)}
+              onClick={() => handleSelection(idea)}
+              className={"bg-yellow2 hover:border hover:border-white"}
+              key={idx}
+            />
+          ))}
+        </div>
+        <div className="flex flex-wrap">
+          {BAIdeas.map((idea, idx) => (
+            <ScatterCircle
+              onMouseEnter={() => setHoveredIdea(idea)}
+              onMouseLeave={() => setHoveredIdea(null)}
+              onClick={() => handleSelection(idea)}
+              className={"bg-green3 hover:border hover:border-white"}
+              key={idx}
+            />
+          ))}
+        </div>
+        <div className="flex flex-wrap ">
+          {ballotIdeas.map((idea, idx) => (
+            <ScatterCircle
+              onMouseEnter={() => setHoveredIdea(idea)}
+              onMouseLeave={() => setHoveredIdea(null)}
+              onClick={() => handleSelection(idea)}
+              className={"bg-cyan3 hover:border hover:border-white"}
+              key={idx}
+            />
+          ))}
+        </div>
+
         {hoveredIdea ? (
           <p
             ref={solutionRef}

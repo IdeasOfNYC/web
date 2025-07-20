@@ -32,20 +32,11 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
     };
   }, [hoveredIdea]);
 
-  const ideasByIA = useMemo<{ idea: Idea; impactAreaName: string }[]>(() => {
+  const sortedImpactAreas = useMemo<[string, Idea[]][]>(() => {
     const splits = getIASplits(ideas);
-
-    const sortedImpactAreas = Object.entries(splits).sort(
+    return Object.entries(splits).sort(
       ([, ideasA], [, ideasB]) => ideasB.length - ideasA.length
     );
-
-    const flattenedIdeas: { idea: Idea; impactAreaName: string }[] = [];
-    sortedImpactAreas.forEach(([impactAreaName, ideasInArea]) => {
-      ideasInArea.forEach((idea) => {
-        flattenedIdeas.push({ idea, impactAreaName });
-      });
-    });
-    return flattenedIdeas;
   }, [ideas]);
 
   return (
@@ -53,15 +44,19 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="flex flex-wrap relative gap-0.5">
-        {ideasByIA.map(({ idea, impactAreaName }, idx) => (
-          <ScatterCircle
-            onMouseEnter={() => setHoveredIdea(idea)}
-            onMouseLeave={() => setHoveredIdea(null)}
-            onClick={() => handleSelection(idea)}
-            className={IAColorMap(impactAreaName)}
-            key={idx}
-          />
+      <div ref={parentRef} className="flex flex-col gap-2">
+        {sortedImpactAreas.map(([impactAreaName, ideasInArea]) => (
+          <div key={impactAreaName} className="flex flex-wrap">
+            {ideasInArea.map((idea, idx) => (
+              <ScatterCircle
+                onMouseEnter={() => setHoveredIdea(idea)}
+                onMouseLeave={() => setHoveredIdea(null)}
+                onClick={() => handleSelection(idea)}
+                className={IAColorMap(impactAreaName)}
+                key={idx}
+              />
+            ))}
+          </div>
         ))}
         {hoveredIdea ? (
           <p

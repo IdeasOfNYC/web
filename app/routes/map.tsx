@@ -314,8 +314,7 @@ const Map = () => {
             </div>
           ))
         ) : (
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[110%]">
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-white w-6 h-6 z-10 translate-y-1/2 rounded-full border border-neutral-400"></div>
+          <div className="absolute left-1/2 top-1/2 -translate-1/2 max-w-xl">
             {categorization === "stage" ? (
               <StageScatter
                 ideas={filteredIdeas ? filteredIdeas : []}
