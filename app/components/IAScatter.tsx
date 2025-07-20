@@ -53,7 +53,7 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="flex flex-wrap relative">
+      <div ref={parentRef} className="flex flex-wrap relative gap-0.5">
         {ideasByIA.map(({ idea, impactAreaName }, idx) => (
           <ScatterCircle
             onMouseEnter={() => setHoveredIdea(idea)}

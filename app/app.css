@@ -5,12 +5,17 @@
   --color-green0: #f0ffef;
   --color-green1: #e5ffe1;
   --color-green2: #d6ffcf;
-  --color-green3: #b3f9b3;
-  --color-green4: #329a45;
+  --color-green3: #74e489;
+  --color-green4: #57d56e;
+  --color-green5: #40bb57;
   --color-blue1: #ccefff;
   --color-red1: #ffc0c0;
   --color-yellow1: #ffe19a;
-  --color-yellow2: #fdcb3d;
+  --color-yellow2: #ffd752;
+  --color-yellow3: #ffc70f;
+  --color-yellow4: #f7b137;
+  --color-yellow5: #e7a129;
+  --color-yellow6: #e18b21;
   --color-lime1: #c5f098;
   --color-teal1: #b5f7e2;
   --color-teal2: #b5f7e2;
@@ -18,6 +23,7 @@
   --color-magenta1: #ecc8ff;
   --color-cyan1: #e9faff;
   --color-cyan2: #93e6ff;
+  --color-cyan3: #71d8f7;
   --color-neutral1: #fbfbfb;
   --color-neutral2: #e5e5e5;
   --color-neutral3: #b8b8b8;

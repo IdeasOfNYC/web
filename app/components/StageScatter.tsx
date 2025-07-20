@@ -55,7 +55,7 @@ export const StageScatter: FC<StageScatterProps> = ({
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="flex flex-wrap relative">
+      <div ref={parentRef} className="flex flex-wrap relative gap-0.5">
         {ideasByStage.map((idea, idx) => (
           <ScatterCircle
             onMouseEnter={() => setHoveredIdea(idea)}
@@ -64,9 +64,9 @@ export const StageScatter: FC<StageScatterProps> = ({
             className={
               idea.status
                 ? idea.status.FinalBallot
-                  ? "bg-cyan-300 hover:border hover:border-cyan-500"
-                  : "bg-green-300 hover:border hover:border-green-500"
-                : "bg-amber-300 hover:border hover:border-amber-500"
+                  ? "bg-cyan3 hover:border hover:border-white"
+                  : "bg-green3 hover:border hover:border-white"
+                : "bg-yellow2 hover:border hover:border-white"
             }
             key={idx}
           />
