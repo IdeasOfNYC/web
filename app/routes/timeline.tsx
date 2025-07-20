@@ -1,4 +1,5 @@
 import { useContext, useEffect, useMemo, useState, type FC } from "react";
+import BlockButton from "~/components/Button";
 import { IACircles } from "~/components/IACircles";
 import { IAScatter } from "~/components/IAScatter";
 import { IdeaContext } from "~/context/IdeaContext";
@@ -230,18 +231,14 @@ const Timeline = () => {
               Necessitatibus, accusamus amet!
             </p>
             <div className="w-full flex justify-between items-center pt-16">
-              <button
-                className={
-                  "px-8 py-4 bg-green-100 border border-green-600  border-dashed font-semibold hover:bg-green-50 hover:border-green-500 rounded-md shadow shadow-green-400/15 font-display text-nowrap"
-                }
-                onClick={() =>
+              <BlockButton
+                message="Previous Stage"
+                handleClick={() =>
                   ideaFilter.stage === "ballot"
                     ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
                     : setIdeaFilter({ ...ideaFilter, stage: "submitted" })
                 }
-              >
-                Previous Stage
-              </button>
+              ></BlockButton>
               <div className="flex items-end w-full justify-center pr-32 pl-16">
                 <TimelineCircle
                   first={true}
@@ -261,16 +258,14 @@ const Timeline = () => {
                   label="Final Ballot"
                 ></TimelineCircle>
               </div>
-              <button
-                className="px-8 py-4 bg-green-100 border border-green-600  border-dashed font-semibold hover:bg-green-50 hover:border-green-500 rounded-md shadow shadow-green-400/15 font-display text-nowrap"
-                onClick={() =>
+              <BlockButton
+                message="Next Stage"
+                handleClick={() =>
                   ideaFilter.stage === "submitted"
                     ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
                     : setIdeaFilter({ ...ideaFilter, stage: "ballot" })
                 }
-              >
-                Next Stage
-              </button>
+              ></BlockButton>
             </div>
           </div>
         )}

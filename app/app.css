@@ -1,7 +1,79 @@
 @import url("https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@400..700&display=swap");
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Medium.woff2") format("woff2");
+  font-weight: 500; /* Assuming medium is 500 */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Oblique.woff2") format("woff2");
+  font-weight: normal;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-BoldOblique.woff2") format("woff2");
+  font-weight: bold;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-MediumOblique.woff2") format("woff2");
+  font-weight: 500; /* Assuming medium is 500 */
+  font-style: oblique;
+}
+
+body {
+  font-family: "Ronzino", sans-serif;
+}
+
 @theme {
+  --color-green0: #f0ffef;
+  --color-green1: #e5ffe1;
+  --color-green2: #d6ffcf;
+  --color-green3: #74e489;
+  --color-green4: #57d56e;
+  --color-green5: #40bb57;
+  --color-blue1: #ccefff;
+  --color-red1: #ffc0c0;
+  --color-yellow1: #ffe19a;
+  --color-yellow2: #ffd752;
+  --color-yellow3: #ffc70f;
+  --color-yellow4: #f7b137;
+  --color-yellow5: #e7a129;
+  --color-yellow6: #e18b21;
+  --color-lime1: #c5f098;
+  --color-teal1: #b5f7e2;
+  --color-teal2: #b5f7e2;
+  --color-indigo1: #d3dcff;
+  --color-magenta1: #ecc8ff;
+  --color-cyan1: #e9faff;
+  --color-cyan2: #93e6ff;
+  --color-cyan3: #71d8f7;
+  --color-neutral1: #fbfbfb;
+  --color-neutral2: #e5e5e5;
+  --color-neutral3: #b8b8b8;
+
   --font-display: "Edu SA Beginner", cursive;
   --ease-custom: cubic-bezier(0.545, 0.03, 0.33, 1.03);
   /* define keyframes */
