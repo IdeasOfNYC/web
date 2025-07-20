@@ -1,6 +1,52 @@
 @import url("https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@400..700&display=swap");
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Medium.woff2") format("woff2");
+  font-weight: 500; /* Assuming medium is 500 */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-Oblique.woff2") format("woff2");
+  font-weight: normal;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-BoldOblique.woff2") format("woff2");
+  font-weight: bold;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: "Ronzino";
+  src: url("/fonts/Ronzino-MediumOblique.woff2") format("woff2");
+  font-weight: 500; /* Assuming medium is 500 */
+  font-style: oblique;
+}
+
+body {
+  font-family: "Ronzino", sans-serif;
+}
+
 @theme {
   --color-green0: #f0ffef;
   --color-green1: #e5ffe1;
