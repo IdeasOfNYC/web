@@ -2,18 +2,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-yellow2: #fdcb3d;
-  --color-green2: #c0f1c0;
+  --color-green0: #f0ffef;
+  --color-green1: #e5ffe1;
+  --color-green2: #d6ffcf;
+  --color-green3: #b3f9b3;
+  --color-green4: #329a45;
   --color-blue1: #ccefff;
   --color-red1: #ffc0c0;
-  --color-neutral1: #fbfbfb;
-  --color-green1: #e5ffe1;
-  --color-neutral2: #e5e5e5;
   --color-yellow1: #ffe19a;
+  --color-yellow2: #fdcb3d;
   --color-lime1: #c5f098;
-  --color-cyan1: #b5f7e2;
+  --color-teal1: #b5f7e2;
+  --color-teal2: #b5f7e2;
   --color-indigo1: #d3dcff;
   --color-magenta1: #ecc8ff;
+  --color-cyan1: #e9faff;
+  --color-cyan2: #93e6ff;
+  --color-neutral1: #fbfbfb;
+  --color-neutral2: #e5e5e5;
   --color-neutral3: #b8b8b8;
 
   --font-display: "Edu SA Beginner", cursive;
