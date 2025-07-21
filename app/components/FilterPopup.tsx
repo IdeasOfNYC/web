@@ -8,15 +8,15 @@ interface FilterPopupProps {
 }
 
 const IMPACT_AREAS = [
-  "Social Services & Accessibility",
-  "Education", 
-  "Health & Wellbeing",
-  "Workforce Development",
-  "Environment & Public Space",
-  "Public Safety",
-  "Arts & Culture",
-  "Civic Engagement",
-  "Other"
+  { value: "Social Services & Accessiblity", label: "Social Services & Accessibility" },
+  { value: "Education", label: "Education" },
+  { value: "Health & Wellbeing", label: "Health & Wellbeing" },
+  { value: "Workforce Development", label: "Workforce Development" },
+  { value: "Environment & Public Space", label: "Environment & Public Space" },
+  { value: "Public Safety", label: "Public Safety" },
+  { value: "Arts & Culture", label: "Arts & Culture" },
+  { value: "Civic Engagement", label: "Civic Engagement" },
+  { value: "Other", label: "Other" }
 ];
 
 const AUDIENCES = [
@@ -153,15 +153,15 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
             />
             NONE (All Impact Areas)
           </label>
-          {IMPACT_AREAS.map(area => (
-            <label key={area} className="flex items-center text-sm">
+          {IMPACT_AREAS.map(({ value, label }) => (
+            <label key={value} className="flex items-center text-sm">
               <input
                 type="checkbox"
-                checked={localFilter.impactArea.includes(area)}
-                onChange={(e) => handleImpactAreaChange(area, e.target.checked)}
+                checked={localFilter.impactArea.includes(value)}
+                onChange={(e) => handleImpactAreaChange(value, e.target.checked)}
                 className="mr-2"
               />
-              {area}
+              {label}
             </label>
           ))}
         </div>
