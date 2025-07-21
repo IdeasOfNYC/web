@@ -37,13 +37,13 @@ export default function Landing() {
             href="https://www.participate.nyc.gov"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-base sm:text-lg flex items-center border border-dotted rounded border-neutral-400 bg-white px-3 py-1 hover:bg-neutral-100"
+            className="px-3 py-1 hover:bg-neutral-100 rounded-sm flex items-center text-sm sm:text-base text-neutral-700 font-medium border border-dotted border-neutral-400 bg-white"
           >
             The People's Money
             <ExternalLinkIcon
               className="ml-2"
-              width={18}
-              height={18}
+              width={16}
+              height={16}
               strokeWidth={1.5}
             />
           </a>
