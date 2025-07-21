@@ -8,7 +8,7 @@ interface FilterPopupProps {
 }
 
 const IMPACT_AREAS = [
-  "Social Services & Accessiblity",
+  "Social Services & Accessibility",
   "Education", 
   "Health & Wellbeing",
   "Workforce Development",

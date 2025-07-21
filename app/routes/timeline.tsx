@@ -329,10 +329,10 @@ const Timeline: React.FC = () => {
               <span className="font-medium">{didNotAdvance.length} </span>
               {`ideas ${
                 ideaFilter.stage === "submitted"
-                  ? "did not advance to Borough Assembly (BA) review"
+                  ? "not advanced to Borough Assembly (BA) review"
                   : ideaFilter.stage === "BA"
-                  ? "did not get added to final ballot"
-                  : "did not get chosen for implementation"
+                  ? "not added to final ballot"
+                  : "not chosen for implementation"
               }`}
             </p>
           </button>
