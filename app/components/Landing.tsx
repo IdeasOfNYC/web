@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import { Link } from "react-router";
+import BlockButton from "./Button";
 
 export default function Landing() {
   return (
@@ -20,7 +21,7 @@ export default function Landing() {
                   About the Process
                 </button>
               </Link>
-  
+
               <Link to="/selected">
                 <button className="px-3 py-1 hover:bg-neutral-100 rounded-sm">
                   Selected Ideas
@@ -32,15 +33,20 @@ export default function Landing() {
 
         {/* Right: Link */}
         <div className="flex items-center justify-end min-w-[160px]">
-          <button className="text-base sm:text-lg flex items-center border border-dotted rounded border-neutral-400 bg-white px-3 py-1 hover:bg-neutral-100">
+          <a
+            href="https://www.participate.nyc.gov"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1 hover:bg-neutral-100 rounded-sm flex items-center text-sm sm:text-base text-neutral-700 font-medium border border-dotted border-neutral-400 bg-white"
+          >
             The People's Money
             <ExternalLinkIcon
               className="ml-2"
-              width={18}
-              height={18}
+              width={16}
+              height={16}
               strokeWidth={1.5}
             />
-          </button>
+          </a>
         </div>
       </div>
       {/* hero section with paper background */}
@@ -70,9 +76,7 @@ export default function Landing() {
           {/* CTA */}
           <div className="flex justify-center gap-4 flex-wrap pb-24">
             <Link to="/map">
-              <button className="px-8 py-4 bg-green-100 border border-green-600  border-dashed font-semibold hover:bg-green-50 hover:border-green-500 rounded-md shadow shadow-green-400/15 font-display">
-                SEE LAST YEAR’S (2024) IDEAS →
-              </button>
+              <BlockButton message="SEE LAST YEAR'S (2024) IDEAS →"></BlockButton>
             </Link>
           </div>
         </div>

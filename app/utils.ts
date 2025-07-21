@@ -143,7 +143,7 @@ export const getIASplits = (ideas: Idea[]): IASplits => {
  */
 export const IAColorMap = (impactArea: string): string => {
   switch (impactArea) {
-    case "Social Services & Accessiblity":
+    case "Social Services & Accessibility":
       return "bg-blue-300";
     case "Education":
       return "bg-green-300";

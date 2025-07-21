@@ -24,7 +24,7 @@ export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
     <div className="rounded-md border-dashed border border-neutral-300 bg-white/50 p-4 flex flex-col items-start justify-center space-y-4 w-min pointer-events-none">
       <div className="flex items-center gap-2">
         <div
-          className="rounded-full bg-amber-300 flex items-center justify-center text-neutral-900 font-medium text-sm"
+          className="rounded-full bg-yellow2 flex items-center justify-center text-neutral-900 font-medium text-sm"
           style={{
             width: `${ideas.length / 30 + 32}px`,
             minWidth: `${ideas.length / 30 + 32}px`,
@@ -42,7 +42,7 @@ export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
       </div>
       <div className="flex items-center gap-2">
         <div
-          className="w-10 h-10 rounded-full bg-green-300 flex items-center justify-center text-neutral-900 font-medium text-sm"
+          className="w-10 h-10 rounded-full bg-green3 flex items-center justify-center text-neutral-900 font-medium text-sm"
           style={{
             width: `${baIdeas.length / 30 + 32}px`,
             minWidth: `${baIdeas.length / 30 + 32}px`,
@@ -63,7 +63,7 @@ export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
       </div>
       <div className="flex items-center gap-2">
         <div
-          className="w-10 h-10 rounded-full bg-cyan-300 flex items-center justify-center text-neutral-900 font-medium text-sm"
+          className="w-10 h-10 rounded-full bg-cyan2 flex items-center justify-center text-neutral-900 font-medium text-sm"
           style={{
             width: `${ballotIdeas.length / 30 + 32}px`,
             minWidth: `${ballotIdeas.length / 30 + 32}px`,

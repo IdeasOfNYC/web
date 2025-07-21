@@ -1,6 +1,6 @@
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import { IdeaContext } from '~/context/IdeaContext';
-import type { IdeaFilter, Borough } from '~/types';
+import type { Borough } from '~/types';
 
 interface FilterPopupProps {
   isOpen: boolean;
@@ -8,40 +8,32 @@ interface FilterPopupProps {
 }
 
 const IMPACT_AREAS = [
-  "Social Services & Accessiblity",
-  "Education", 
-  "Health & Wellbeing",
-  "Workforce Development",
-  "Environment & Public Space",
-  "Public Safety",
-  "Arts & Culture",
-  "Civic Engagement",
-  "Other"
+  { value: "Social Services & Accessibility", label: "Social Services & Accessibility" },
+  { value: "Education", label: "Education" },
+  { value: "Health & Wellbeing", label: "Health & Wellbeing" },
+  { value: "Workforce Development", label: "Workforce Development" },
+  { value: "Environment & Public Space", label: "Environment & Public Space" },
+  { value: "Public Safety", label: "Public Safety" },
+  { value: "Arts & Culture", label: "Arts & Culture" },
+  { value: "Civic Engagement", label: "Civic Engagement" },
+  { value: "Other", label: "Other" }
 ];
 
 const AUDIENCES = [
-  "Children (0-17)",
-  "Young Adults (18-24)", 
-  "Adults (25-64)",
-  "Seniors (65+)",
-  "Families",
-  "Students",
-  "Workers",
-  "Residents",
-  "Visitors",
-  "Everyone"
+  "Children (0-17)", "Young Adults (18-24)", "Adults (25-64)", "Seniors (65+)",
+  "Families", "Students", "Workers", "Residents", "Visitors", "Everyone"
 ];
 
 export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
   const { ideaFilter, setIdeaFilter } = useContext(IdeaContext);
-  const [localFilter, setLocalFilter] = useState<IdeaFilter>(ideaFilter);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        onClose();
-      }
+      const target = event.target as HTMLElement;
+      if (dropdownRef.current?.contains(target)) return;
+      if (document.getElementById("filter-toggle-button")?.contains(target)) return;
+      onClose();
     };
 
     if (isOpen) {
@@ -55,35 +47,30 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
 
   if (!isOpen) return null;
 
-  const handleApply = () => {
-    setIdeaFilter(localFilter);
-    onClose();
-  };
-
   const handleImpactAreaChange = (impactArea: string, checked: boolean) => {
     if (checked) {
-      setLocalFilter({
-        ...localFilter,
-        impactArea: [...localFilter.impactArea, impactArea]
+      setIdeaFilter({
+        ...ideaFilter,
+        impactArea: [...ideaFilter.impactArea, impactArea]
       });
     } else {
-      setLocalFilter({
-        ...localFilter,
-        impactArea: localFilter.impactArea.filter(ia => ia !== impactArea)
+      setIdeaFilter({
+        ...ideaFilter,
+        impactArea: ideaFilter.impactArea.filter(ia => ia !== impactArea)
       });
     }
   };
 
   const handleAudienceChange = (audience: string, checked: boolean) => {
     if (checked) {
-      setLocalFilter({
-        ...localFilter,
-        audience: [...localFilter.audience, audience]
+      setIdeaFilter({
+        ...ideaFilter,
+        audience: [...ideaFilter.audience, audience]
       });
     } else {
-      setLocalFilter({
-        ...localFilter,
-        audience: localFilter.audience.filter(a => a !== audience)
+      setIdeaFilter({
+        ...ideaFilter,
+        audience: ideaFilter.audience.filter(a => a !== audience)
       });
     }
   };
@@ -91,16 +78,18 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
   return (
     <div 
       ref={dropdownRef}
-      className="absolute top-full right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80 max-h-96 overflow-y-auto"
+      className="absolute top-full right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80"
     >
       <h3 className="text-sm font-semibold mb-3">Filter Options</h3>
-      
+
       {/* Borough */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Borough:</label>
         <select
-          value={localFilter.borough || ''}
-          onChange={(e) => setLocalFilter({...localFilter, borough: e.target.value as Borough || null})}
+          value={ideaFilter.borough || ''}
+          onChange={(e) =>
+            setIdeaFilter({ ...ideaFilter, borough: e.target.value as Borough || null })
+          }
           className="w-full p-2 text-sm border rounded"
         >
           <option value="">All Boroughs</option>
@@ -126,8 +115,10 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
                 type="radio"
                 name="stage"
                 value={value}
-                checked={localFilter.stage === value}
-                onChange={(e) => setLocalFilter({...localFilter, stage: e.target.value as any})}
+                checked={ideaFilter.stage === value}
+                onChange={(e) =>
+                  setIdeaFilter({ ...ideaFilter, stage: e.target.value as any })
+                }
                 className="mr-2"
               />
               {label}
@@ -139,29 +130,29 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       {/* Impact Area */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Impact Area:</label>
-        <div className="max-h-32 overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-1">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
           <label className="flex items-center text-sm">
             <input
               type="checkbox"
-              checked={localFilter.impactArea.length === 0}
+              checked={ideaFilter.impactArea.length === 0}
               onChange={(e) => {
                 if (e.target.checked) {
-                  setLocalFilter({...localFilter, impactArea: []});
+                  setIdeaFilter({ ...ideaFilter, impactArea: [] });
                 }
               }}
               className="mr-2"
             />
             NONE (All Impact Areas)
           </label>
-          {IMPACT_AREAS.map(area => (
-            <label key={area} className="flex items-center text-sm">
+          {IMPACT_AREAS.map(({ value, label }) => (
+            <label key={value} className="flex items-center text-sm">
               <input
                 type="checkbox"
-                checked={localFilter.impactArea.includes(area)}
-                onChange={(e) => handleImpactAreaChange(area, e.target.checked)}
+                checked={ideaFilter.impactArea.includes(value)}
+                onChange={(e) => handleImpactAreaChange(value, e.target.checked)}
                 className="mr-2"
               />
-              {area}
+              {label}
             </label>
           ))}
         </div>
@@ -170,25 +161,25 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       {/* Audience */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Audience:</label>
-        <div className="max-h-32 overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-1">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
           <label className="flex items-center text-sm">
             <input
               type="checkbox"
-              checked={localFilter.audience.length === 0}
+              checked={ideaFilter.audience.length === 0}
               onChange={(e) => {
                 if (e.target.checked) {
-                  setLocalFilter({...localFilter, audience: []});
+                  setIdeaFilter({ ...ideaFilter, audience: [] });
                 }
               }}
               className="mr-2"
             />
             NONE (All Audiences)
           </label>
-          {AUDIENCES.map(audience => (
+          {AUDIENCES.map((audience) => (
             <label key={audience} className="flex items-center text-sm">
               <input
                 type="checkbox"
-                checked={localFilter.audience.includes(audience)}
+                checked={ideaFilter.audience.includes(audience)}
                 onChange={(e) => handleAudienceChange(audience, e.target.checked)}
                 className="mr-2"
               />
@@ -196,22 +187,6 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
             </label>
           ))}
         </div>
-      </div>
-
-      {/* Buttons */}
-      <div className="flex gap-2 pt-2">
-        <button 
-          onClick={handleApply} 
-          className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600"
-        >
-          Apply
-        </button>
-        <button 
-          onClick={onClose} 
-          className="px-3 py-1 border rounded text-sm hover:bg-gray-50"
-        >
-          Cancel
-        </button>
       </div>
     </div>
   );
