@@ -33,7 +33,12 @@ export default function Landing() {
 
         {/* Right: Link */}
         <div className="flex items-center justify-end min-w-[160px]">
-          <button className="text-base sm:text-lg flex items-center border border-dotted rounded border-neutral-400 bg-white px-3 py-1 hover:bg-neutral-100">
+          <a
+            href="https://www.participate.nyc.gov"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-base sm:text-lg flex items-center border border-dotted rounded border-neutral-400 bg-white px-3 py-1 hover:bg-neutral-100"
+          >
             The People's Money
             <ExternalLinkIcon
               className="ml-2"
@@ -41,7 +46,7 @@ export default function Landing() {
               height={18}
               strokeWidth={1.5}
             />
-          </button>
+          </a>
         </div>
       </div>
       {/* hero section with paper background */}
