@@ -79,7 +79,7 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen bg-neutral-50">
         <div
-          className={`max-h-full overflow-y-scroll flex flex-col gap-2 w-80 lg:w-96 xl:w-[30rem] flex-shrink-0 h-full`}
+          className={`relative max-h-full overflow-y-scroll flex flex-col gap-2 w-80 lg:w-96 xl:w-[30rem] flex-shrink-0 h-full`}
         >
           <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
             <div className="flex gap-1 w-full">
@@ -95,10 +95,18 @@ const SideBar = () => {
               </div>
               <div className="relative flex-shrink-0">
                 <button
-                  className="px-3 py-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50 whitespace-nowrap"
-                  onClick={() => setIsFilterPopupOpen(true)}
+                  id="filter-toggle-button"
+                  className="px-3 py-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50 whitespace-nowrap flex items-center gap-1"
+                  onClick={() => setIsFilterPopupOpen(prev => !prev)}
                 >
-                  Filter ▼
+                  Filter
+                  <span
+                    className={`transition-transform duration-200 transform origin-center ${
+                      isFilterPopupOpen ? "-translate-y-[-2px] rotate-180" : ""
+                    }`}
+                  >
+                    ▼
+                  </span>
                 </button>
                 <FilterPopup
                   isOpen={isFilterPopupOpen}

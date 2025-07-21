@@ -38,20 +38,27 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (
+      dropdownRef.current &&
+      dropdownRef.current.contains(target)
+    ) return;
 
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    const filterButton = document.getElementById("filter-toggle-button");
+    if (filterButton && filterButton.contains(target)) return;
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+    onClose();
+  };
+
+  if (isOpen) {
+    document.addEventListener('mousedown', handleClickOutside);
+  }
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -91,7 +98,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
   return (
     <div 
       ref={dropdownRef}
-      className="absolute top-full right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80 max-h-96 overflow-y-auto"
+      className="absolute top-full right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80"
     >
       <h3 className="text-sm font-semibold mb-3">Filter Options</h3>
       
@@ -139,7 +146,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       {/* Impact Area */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Impact Area:</label>
-        <div className="max-h-32 overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-1">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
           <label className="flex items-center text-sm">
             <input
               type="checkbox"
@@ -170,7 +177,7 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       {/* Audience */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Audience:</label>
-        <div className="max-h-32 overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-1">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
           <label className="flex items-center text-sm">
             <input
               type="checkbox"
