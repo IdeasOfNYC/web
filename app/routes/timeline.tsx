@@ -274,7 +274,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-4 items-center justify-between py-16 overflow-y-scroll pb-8">
-      <div className="flex gap-2 items-center border border-dashed border-neutral3 p-1 bg-white h-12 absolute top-4 left-1/2 -translate-x-1/2 rounded-lg pl-4 shadow-xs">
+      <div className="flex gap-2 items-center border border-dashed border-neutral3 p-1 bg-white h-12 absolute top-4 left-1/2 -translate-x-1/2 rounded-lg pl-4 shadow-xs z-20">
         <p>Showing ideas from</p>
         <select
           className="w-min p-2 border border-neutral2 bg-white hover:bg-neutral-50 active:bg-neutral-100 rounded-md cursor-pointer"
@@ -326,11 +326,11 @@ const Timeline: React.FC = () => {
           ref={topRef}
           className={`${
             ideaFilter.stage === "submitted"
-              ? "bg-amber-300 hover:bg-amber-200 border-amber-500 hover:border-amber-400"
+              ? "bg-yellow3 hover:bg-yellow2 active:bg-yellow1 border-yellow6 hover:border-yellow5 active:border-yellow4"
               : ideaFilter.stage === "BA"
-              ? "bg-green-200 hover:bg-green-100 border-green-500 hover:border-green-400"
-              : "bg-cyan-200 hover:bg-cyan-100 border-cyan-500 hover:border-cyan-400"
-          } w-full max-w-2xl h-16 rounded-full flex items-center justify-center border cursor-pointer relative z-20`}
+              ? "bg-green2 hover:bg-green1 active:bg-green0 border-green5 hover:border-green4 active:border-green3"
+              : "bg-cyan3 hover:bg-cyan2 active:bg-cyan1 border-cyan-500 hover:border-cyan-400"
+          } w-full max-w-2xl h-12 rounded-full flex items-center justify-center border cursor-pointer relative z-10`}
           onClick={() => setScatterIdeas("stage")}
         >
           <p>
@@ -348,7 +348,7 @@ const Timeline: React.FC = () => {
         <div className="flex w-full justify-center gap-16">
           <button
             ref={leftRef}
-            className="w-min max-w-2xl h-16 rounded-full flex items-center justify-center border px-8 cursor-pointer relative z-20"
+            className="w-min max-w-2xl h-12 rounded-full flex items-center justify-center border px-8 cursor-pointer relative1 z-10"
             style={{ backgroundColor: "#E1E1E1", borderColor: "#D1D5DB" }}
             onClick={() => setScatterIdeas("did not advance")}
           >
@@ -368,11 +368,11 @@ const Timeline: React.FC = () => {
             ref={rightRef}
             className={`${
               ideaFilter.stage === "submitted"
-                ? "bg-green-200 hover:bg-green-100 border-green-500 hover:border-green-400"
+                ? "bg-green2 hover:bg-green1 active:bg-green0 border-green5 hover:border-green4 active:border-green30"
                 : ideaFilter.stage === "BA"
-                ? "bg-cyan-200 hover:bg-cyan-100 border-cyan-500 hover:border-cyan-400"
+                ? "bg-cyan3 hover:bg-cyan2 active:bg-cyan1 border-cyan-500 hover:border-cyan-40"
                 : "bg-purple-200 hover:bg-purple-100 border-purple-500 hover:border-purple-400"
-            } w-min max-w-2xl h-16 rounded-full flex items-center justify-center border px-8 cursor-pointer relative z-20`}
+            } w-min max-w-2xl h-12 rounded-full flex items-center justify-center border px-8 cursor-pointer relative z-10`}
             onClick={() => {
               if (ideaFilter.stage !== "ballot")
                 setIdeaFilter({

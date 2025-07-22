@@ -50,15 +50,15 @@ body {
 @theme {
   --color-green0: #f0ffef;
   --color-green1: #e5ffe1;
-  --color-green2: #d6ffcf;
+  --color-green2: #c9ffc0;
   --color-green3: #74e489;
   --color-green4: #57d56e;
   --color-green5: #40bb57;
   --color-blue1: #ccefff;
   --color-red1: #ffc0c0;
-  --color-yellow1: #ffe19a;
-  --color-yellow2: #ffd752;
-  --color-yellow3: #ffc70f;
+  --color-yellow1: #fff29a;
+  --color-yellow2: #ffe564;
+  --color-yellow3: #ffda61;
   --color-yellow4: #f7b137;
   --color-yellow5: #e7a129;
   --color-yellow6: #e18b21;
@@ -68,8 +68,8 @@ body {
   --color-indigo1: #d3dcff;
   --color-magenta1: #ecc8ff;
   --color-cyan1: #e9faff;
-  --color-cyan2: #93e6ff;
-  --color-cyan3: #71d8f7;
+  --color-cyan2: #b3edff;
+  --color-cyan3: #9de8ff;
   --color-neutral1: #fbfbfb;
   --color-neutral2: #e5e5e5;
   --color-neutral3: #b8b8b8;

@@ -23,6 +23,7 @@ const SideBar = () => {
   }, [filteredIdeas]);
 
   useEffect(() => {
+    console.log(displayMode);
     if (displayMode === "map") navigate("/map");
     else navigate("/timeline");
   }, [displayMode, navigate]);

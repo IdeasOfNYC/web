@@ -60,7 +60,7 @@ export const StageScatter: FC<StageScatterProps> = ({
               onMouseEnter={() => setHoveredIdea(idea)}
               onMouseLeave={() => setHoveredIdea(null)}
               onClick={() => handleSelection(idea)}
-              className={"bg-yellow2 hover:border hover:border-white"}
+              className={"bg-yellow3 hover:border hover:border-white"}
               key={idx}
             />
           ))}

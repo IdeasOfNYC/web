@@ -44,7 +44,7 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
       <p className="font-light text-neutral-400">
         Hover to preview, click to open
       </p>
-      <div ref={parentRef} className="flex flex-col gap-2">
+      <div ref={parentRef} className="flex flex-col gap-2 relative">
         {sortedImpactAreas.map(([impactAreaName, ideasInArea]) => (
           <div key={impactAreaName} className="flex flex-wrap">
             {ideasInArea.map((idea, idx) => (

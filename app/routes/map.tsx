@@ -76,6 +76,11 @@ const Map = () => {
     );
 
   useEffect(() => {
+    if (ideaFilter.stage !== "submitted")
+      setIdeaFilter({ ...ideaFilter, stage: "submitted" });
+  }, [ideaFilter, setIdeaFilter]);
+
+  useEffect(() => {
     let animationFrameId: number;
 
     const calculateMidpoints = () => {
