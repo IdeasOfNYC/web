@@ -30,7 +30,7 @@ const SideBar = () => {
 
   const MemoizedIdeas = useMemo(() => {
     return filteredIdeas && currentPage !== null ? (
-      <div className="flex flex-col gap-2 max-w-2xl">
+      <div className="flex flex-col gap-2 max-w-2xl max-h-full overflow-y-scroll overflow-x-hidden items-start">
         <>
           {filteredIdeas
             .slice(
@@ -80,43 +80,39 @@ const SideBar = () => {
     return (
       <div className="flex w-full max-h-screen h-screen bg-neutral-50">
         <div
-          className={`relative max-h-full overflow-y-scroll flex flex-col gap-2 w-80 lg:w-96 xl:w-[30rem] flex-shrink-0 h-full`}
+          className={`relative max-h-full flex flex-col gap-2 w-80 lg:w-96 xl:w-[30rem] flex-shrink-0 h-full p-4`}
         >
-          <div className={`flex flex-col gap-2 p-2 h-full w-full`}>
-            <div className="flex gap-1 w-full">
-              <div className="flex-1">
-                <Search
-                  handleSearchTermChange={(newTerm) => {
-                    ideaContext.setIdeaFilter({
-                      ...ideaContext.ideaFilter,
-                      keyword: newTerm,
-                    });
-                  }}
-                ></Search>
-              </div>
-              <div className="relative flex-shrink-0">
-                <button
-                  id="filter-toggle-button"
-                  className="px-3 py-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50 whitespace-nowrap flex items-center gap-1"
-                  onClick={() => setIsFilterPopupOpen((prev) => !prev)}
+          <div className="flex gap-2 w-full">
+            <Search
+              handleSearchTermChange={(newTerm) => {
+                ideaContext.setIdeaFilter({
+                  ...ideaContext.ideaFilter,
+                  keyword: newTerm,
+                });
+              }}
+            ></Search>
+            <div className="relative flex-shrink-0">
+              <button
+                id="filter-toggle-button"
+                className="px-3 py-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50 whitespace-nowrap flex items-center gap-1"
+                onClick={() => setIsFilterPopupOpen((prev) => !prev)}
+              >
+                Filter
+                <span
+                  className={`transition-transform duration-200 transform origin-center ${
+                    isFilterPopupOpen ? "-translate-y-[-2px] rotate-180" : ""
+                  }`}
                 >
-                  Filter
-                  <span
-                    className={`transition-transform duration-200 transform origin-center ${
-                      isFilterPopupOpen ? "-translate-y-[-2px] rotate-180" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                </button>
-                <FilterPopup
-                  isOpen={isFilterPopupOpen}
-                  onClose={() => setIsFilterPopupOpen(false)}
-                />
-              </div>
+                  ▼
+                </span>
+              </button>
+              <FilterPopup
+                isOpen={isFilterPopupOpen}
+                onClose={() => setIsFilterPopupOpen(false)}
+              />
             </div>
-            {MemoizedIdeas}
           </div>
+          {MemoizedIdeas}
         </div>
         <div className="w-full min-h-full relative">
           <Outlet></Outlet>

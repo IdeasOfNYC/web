@@ -17,7 +17,7 @@ export const Search: FC<SearchProps> = ({
       type="text"
       placeholder="Search..."
       value={searchTerm}
-      className="w-full border-neutral-200 border rounded-lg px-3 py-2"
+      className="w-full border rounded-lg px-3 py-2 bg-white hover:bg-neutral-50 active:bg-neutral-100 border-neutral-200"
       onChange={(e) => {
         setSearchTerm(e.target.value);
         if (handleSearchTermChange) handleSearchTermChange(e.target.value);

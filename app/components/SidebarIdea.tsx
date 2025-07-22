@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { Idea } from "~/types";
-import { toTitleCase, getAdvancementStyles } from "~/utils";
+import { toTitleCase, getAdvancementStyles, truncate } from "~/utils";
 
 export interface SidebarIdeaProps {
   idea: Idea;
@@ -12,16 +12,24 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
 
   return (
     <div
-      className="w-full pt-3 px-3 pb-2.5 border border-neutral-200 bg-white flex flex-col gap-3 relative group cursor-pointer hover:bg-neutral-50 rounded-lg"
+      className="w-full pt-3 px-3 pb-2.5 border border-dashed border-neutral3 bg-white flex flex-col gap-3 relative group cursor-pointer hover:bg-neutral-50 rounded-lg"
       onClick={() => handleOpen(idea)}
     >
-      <h1 className="text-lg font-bold leading-tight">{idea.solution}</h1>
+      <h1 className="text-lg font-bold leading-tight">
+        {truncate(idea.solution, 80)}
+      </h1>
 
       <div className="flex gap-4 w-full">
-        <span className="border border-neutral-200 p-1 rounded-full text-sm">{toTitleCase(idea.borough)}</span>
-        <span className={`p-1 rounded-full text-sm ${getAdvancementStyles(idea.status)}`}>
+        <span className="border border-neutral-200 p-1 px-2 rounded-full text-sm">
+          {toTitleCase(idea.borough)}
+        </span>
+        <span
+          className={`p-1 px-2 rounded-full text-center items-center justify-center flex text-sm ${getAdvancementStyles(
+            idea.status
+          )}`}
+        >
           {idea.status === null
-            ? "Did Not Advance"
+            ? "Submitted"
             : idea.status.Final20Ideas
             ? "Finalist"
             : "Advanced to BA"}
@@ -33,13 +41,13 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
             Impact Area:
           </label>
 
-<div className="flex flex-wrap gap-2">
-              <>
+          <div className="flex flex-wrap gap-2">
+            <>
               {idea.impactArea
                 .slice(0, MAX_TRUNCATE_THRESHOLD)
                 .map((someImpactArea, idx) => (
                   <span
-                    className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
+                    className="bg-neutral2 p-1 px-2 text-nowrap h-min rounded-full text-sm"
                     key={idx}
                   >
                     {someImpactArea}
@@ -62,16 +70,14 @@ export const SidebarIdea: FC<SidebarIdeaProps> = ({ idea, handleOpen }) => {
 
           <div className="flex gap-2">
             <>
-              {idea.audience
-                .slice(0, 1)
-                .map((someAudience, idx) => (
-                  <span
-                    className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm"
-                    key={idx}
-                  >
-                    {someAudience}
-                  </span>
-                ))}
+              {idea.audience.slice(0, 1).map((someAudience, idx) => (
+                <span
+                  className="bg-neutral2 p-1 px-2 text-nowrap h-min rounded-full text-sm"
+                  key={idx}
+                >
+                  {someAudience}
+                </span>
+              ))}
             </>
             {idea.audience.length > 1 ? (
               <span className="border border-neutral-200 p-1 text-nowrap h-min rounded-full text-sm">
