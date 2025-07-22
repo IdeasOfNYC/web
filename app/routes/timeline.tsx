@@ -1,9 +1,16 @@
-import { useContext, useEffect, useMemo, useState, useRef, type FC } from "react";
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  type FC,
+} from "react";
 import BlockButton from "~/components/Button";
 import { IACircles } from "~/components/IACircles";
 import { IAScatter } from "~/components/IAScatter";
 import { IdeaContext } from "~/context/IdeaContext";
-import { type Idea } from "~/types";
+import { BOROUGHS, type Borough, type Idea } from "~/types";
 
 interface TimelineCircleProps {
   first: boolean;
@@ -64,12 +71,13 @@ const SankeyConnection: React.FC<SankeyConnectionProps> = ({
   height,
   positions,
   side,
-
 }) => {
   const pathData = useMemo(() => {
-    const containerRect = document.querySelector(
-      ".flex.flex-col.items-center.justify-center.gap-32.py-16.relative"
-    )?.getBoundingClientRect();
+    const containerRect = document
+      .querySelector(
+        ".flex.flex-col.items-center.justify-center.gap-32.py-16.relative"
+      )
+      ?.getBoundingClientRect();
     if (!containerRect || !positions.top) return "";
 
     const topRect = positions.top;
@@ -83,22 +91,19 @@ const SankeyConnection: React.FC<SankeyConnectionProps> = ({
     const rawTargetLeft = toX - containerRect.left;
     const rawTargetRight = rawTargetLeft + toWidth;
 
-    const targetLeft = side === "left"
-      ? rawTargetLeft + inset
-      : rawTargetLeft + inset;
+    const targetLeft =
+      side === "left" ? rawTargetLeft + inset : rawTargetLeft + inset;
 
-    const targetRight = side === "left"
-      ? rawTargetRight - inset
-      : rawTargetRight - 30;
-      
-    const targetRect =
-      side === "left" ? positions.left : positions.right;
+    const targetRight =
+      side === "left" ? rawTargetRight - inset : rawTargetRight - 30;
+
+    const targetRect = side === "left" ? positions.left : positions.right;
     const targetY = targetRect
       ? targetRect.top + targetRect.height / 2 - containerRect.top
       : height;
 
     const sourceStartX = side === "left" ? topLeft + inset : topMid - inset;
-    const sourceEndX   = side === "left" ? topMid - inset  : topRight - inset;
+    const sourceEndX = side === "left" ? topMid - inset : topRight - inset;
 
     const thickness = 10;
     const halfT = thickness / 2;
@@ -239,28 +244,28 @@ const Timeline: React.FC = () => {
           top: "bg-amber-300 hover:bg-amber-200 border-amber-500",
           right: "bg-green-200 hover:bg-green-100 border-green-500",
           leftSankey: "#F4F4F4",
-          rightSankey: "#E5FFE5"
+          rightSankey: "#E5FFE5",
         };
       case "BA":
         return {
           top: "bg-green-200 hover:bg-green-100 border-green-500",
           right: "bg-cyan-200 hover:bg-cyan-100 border-cyan-500",
           leftSankey: "#F4F4F4",
-          rightSankey: "#E9FAFF"
+          rightSankey: "#E9FAFF",
         };
       case "ballot":
         return {
           top: "bg-cyan-200 hover:bg-cyan-100 border-cyan-500",
           right: "bg-purple-200 hover:bg-purple-100 border-purple-500",
           leftSankey: "#F4F4F4",
-          rightSankey: "#F6E6FF"
+          rightSankey: "#F6E6FF",
         };
       default:
         return {
           top: "bg-amber-300 hover:bg-amber-200 border-amber-500",
           right: "bg-green-200 hover:bg-green-100 border-green-500",
           leftSankey: "#F4F4F4",
-          rightSankey: "#E5FFE5"
+          rightSankey: "#E5FFE5",
         };
     }
   };
@@ -269,6 +274,28 @@ const Timeline: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-4 items-center justify-between py-16 overflow-y-scroll pb-8">
+      <div className="flex gap-2 items-center border border-dashed border-neutral3 p-1 bg-white h-12 absolute top-4 left-1/2 -translate-x-1/2 rounded-lg pl-4 shadow-xs">
+        <p>Showing ideas from</p>
+        <select
+          className="w-min p-2 border border-neutral2 bg-white hover:bg-neutral-50 active:bg-neutral-100 rounded-md cursor-pointer"
+          value={ideaFilter.borough || ""}
+          onChange={(e) =>
+            setIdeaFilter({
+              ...ideaFilter,
+              borough:
+                e.target.value === "" ? null : (e.target.value as Borough),
+            })
+          }
+        >
+          <option value="">All of NYC</option>
+          {BOROUGHS.map((borough) => (
+            <option key={borough} value={borough}>
+              {borough.charAt(0).toUpperCase() + borough.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="flex flex-col items-center justify-center gap-32 py-16 relative">
         {positions.top && positions.left && (
           <SankeyConnection
