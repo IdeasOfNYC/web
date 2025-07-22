@@ -329,39 +329,37 @@ const Map = () => {
           </div>
         )}
 
-        <div className="absolute w-full top-2 left-0 flex  justify-center items-center">
-          <span className="flex gap-2 items-center border border-dotted border-neutral-300 p-1 bg-white">
-            <p>Ideas by</p>
-            <select
-              className="w-min p-2 border border-neutral-200 bg-white"
-              value={categorization}
-              onChange={(e) =>
-                setCategorization(e.target.value as "stage" | "impact")
-              }
-            >
-              <option value="stage">Stage</option>
-              <option value="impact">Impact</option>
-            </select>
-            <p>from</p>
-            <select
-              className="w-min p-2 border border-neutral-200 bg-white"
-              value={ideaFilter.borough || ""}
-              onChange={(e) =>
-                setIdeaFilter({
-                  ...ideaFilter,
-                  borough:
-                    e.target.value === "" ? null : (e.target.value as Borough),
-                })
-              }
-            >
-              <option value="">All of NYC</option>
-              {BOROUGHS.map((borough) => (
-                <option key={borough} value={borough}>
-                  {borough.charAt(0).toUpperCase() + borough.slice(1)}
-                </option>
-              ))}
-            </select>
-          </span>
+        <div className="flex gap-2 items-center border border-dashed border-neutral3 p-1 bg-white h-12 absolute top-4 left-1/2 -translate-x-1/2 rounded-lg pl-4 shadow-xs">
+          <p>Ideas by</p>
+          <select
+            className="w-min p-2 border border-neutral2 bg-white rounded-md"
+            value={categorization}
+            onChange={(e) =>
+              setCategorization(e.target.value as "stage" | "impact")
+            }
+          >
+            <option value="stage">Stage</option>
+            <option value="impact">Impact</option>
+          </select>
+          <p>from</p>
+          <select
+            className="w-min p-2 border border-neutral2 bg-white rounded-md"
+            value={ideaFilter.borough || ""}
+            onChange={(e) =>
+              setIdeaFilter({
+                ...ideaFilter,
+                borough:
+                  e.target.value === "" ? null : (e.target.value as Borough),
+              })
+            }
+          >
+            <option value="">All of NYC</option>
+            {BOROUGHS.map((borough) => (
+              <option key={borough} value={borough}>
+                {borough.charAt(0).toUpperCase() + borough.slice(1)}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <svg
