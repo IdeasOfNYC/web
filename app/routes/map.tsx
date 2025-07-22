@@ -332,7 +332,7 @@ const Map = () => {
         <div className="flex gap-2 items-center border border-dashed border-neutral3 p-1 bg-white h-12 absolute top-4 left-1/2 -translate-x-1/2 rounded-lg pl-4 shadow-xs">
           <p>Ideas by</p>
           <select
-            className="w-min p-2 border border-neutral2 bg-white rounded-md"
+            className="w-min p-2 border border-neutral2 bg-white hover:bg-neutral-50 active:bg-neutral-100 rounded-md cursor-pointer"
             value={categorization}
             onChange={(e) =>
               setCategorization(e.target.value as "stage" | "impact")
@@ -343,7 +343,7 @@ const Map = () => {
           </select>
           <p>from</p>
           <select
-            className="w-min p-2 border border-neutral2 bg-white rounded-md"
+            className="w-min p-2 border border-neutral2 bg-white hover:bg-neutral-50 active:bg-neutral-100 rounded-md cursor-pointer"
             value={ideaFilter.borough || ""}
             onChange={(e) =>
               setIdeaFilter({

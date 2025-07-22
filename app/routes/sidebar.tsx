@@ -97,7 +97,7 @@ const SideBar = () => {
                 <button
                   id="filter-toggle-button"
                   className="px-3 py-2 border border-neutral-200 rounded-lg bg-white hover:bg-neutral-50 whitespace-nowrap flex items-center gap-1"
-                  onClick={() => setIsFilterPopupOpen(prev => !prev)}
+                  onClick={() => setIsFilterPopupOpen((prev) => !prev)}
                 >
                   Filter
                   <span
@@ -120,20 +120,20 @@ const SideBar = () => {
         <div className="w-full min-h-full relative">
           <Outlet></Outlet>
 
-          <div className="absolute top-3 right-3 z-10">
+          <div className="absolute top-4 left-4 z-10">
             <Link to="/">
-              <button className="p-2 border border-neutral-200 bg-neutral-50 hover:bg-white">
+              <button className="px-4 h-12 rounded-lg border border-dashed border-neutral3 bg-white hover:bg-neutral-50 active:bg-neutral-100 cursor-pointer shadow-xs">
                 Back to Home
               </button>
             </Link>
           </div>
-          <div className="absolute top-2 left-2 border border-neutral-200 flex gap-2 p-1 bg-neutral-100 z-10">
+          <div className="absolute top-4 right-4 border border-dashed border-neutral3 flex gap-1 p-1 bg-white z-10 rounded-lg shadow-xs">
             <button
               className={`${
                 displayMode === "map"
-                  ? "bg-white border-neutral-200 border hover:bg-neutral-50"
-                  : "bg-neutral-100 hover:bg-neutral-50"
-              } p-2 cursor-pointer`}
+                  ? "bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 border border-neutral2"
+                  : "bg-white hover:bg-neutral-50 active:bg-neutral-100"
+              } p-2 cursor-pointer rounded-md`}
               onClick={() => setDisplayMode("map")}
             >
               Map
@@ -141,9 +141,9 @@ const SideBar = () => {
             <button
               className={`${
                 displayMode === "timeline"
-                  ? "bg-white border-neutral-200 border hover:bg-neutral-50"
-                  : "bg-neutral-100 hover:bg-neutral-50"
-              } p-2 cursor-pointer`}
+                  ? "bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 border border-neutral2"
+                  : "bg-white hover:bg-neutral-50 active:bg-neutral-100"
+              } p-2 cursor-pointer rounded-md`}
               onClick={() => setDisplayMode("timeline")}
             >
               Timeline
