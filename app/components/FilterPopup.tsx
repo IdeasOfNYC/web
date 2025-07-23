@@ -1,6 +1,6 @@
-import { useContext, useRef, useEffect } from 'react';
-import { IdeaContext } from '~/context/IdeaContext';
-import type { Borough } from '~/types';
+import { useContext, useRef, useEffect } from "react";
+import { IdeaContext } from "~/context/IdeaContext";
+import type { Borough, IdeaStage } from "~/types";
 
 interface FilterPopupProps {
   isOpen: boolean;
@@ -8,7 +8,10 @@ interface FilterPopupProps {
 }
 
 const IMPACT_AREAS = [
-  { value: "Social Services & Accessibility", label: "Social Services & Accessibility" },
+  {
+    value: "Social Services & Accessibility",
+    label: "Social Services & Accessibility",
+  },
   { value: "Education", label: "Education" },
   { value: "Health & Wellbeing", label: "Health & Wellbeing" },
   { value: "Workforce Development", label: "Workforce Development" },
@@ -16,12 +19,25 @@ const IMPACT_AREAS = [
   { value: "Public Safety", label: "Public Safety" },
   { value: "Arts & Culture", label: "Arts & Culture" },
   { value: "Civic Engagement", label: "Civic Engagement" },
-  { value: "Other", label: "Other" }
+  { value: "Other", label: "Other" },
 ];
 
 const AUDIENCES = [
-  "Children (0-17)", "Young Adults (18-24)", "Adults (25-64)", "Seniors (65+)",
-  "Families", "Students", "Workers", "Residents", "Visitors", "Everyone"
+  "Youth",
+  "Older Adults",
+  "Low Income People",
+  "Immigrants",
+  "Black, Indigenous and/or People of Color",
+  "Parents",
+  "Limited English Proficient Individuals",
+  "People with Disabilities",
+  "Public Housing Residents",
+  "Unhoused People",
+  "Justice Impacted People",
+  "LGBTQ+ People",
+  "Veterans",
+  "Someone Else",
+  "nan",
 ];
 
 export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
@@ -32,16 +48,17 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (dropdownRef.current?.contains(target)) return;
-      if (document.getElementById("filter-toggle-button")?.contains(target)) return;
+      if (document.getElementById("filter-toggle-button")?.contains(target))
+        return;
       onClose();
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, onClose]);
 
@@ -51,12 +68,12 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
     if (checked) {
       setIdeaFilter({
         ...ideaFilter,
-        impactArea: [...ideaFilter.impactArea, impactArea]
+        impactArea: [...ideaFilter.impactArea, impactArea],
       });
     } else {
       setIdeaFilter({
         ...ideaFilter,
-        impactArea: ideaFilter.impactArea.filter(ia => ia !== impactArea)
+        impactArea: ideaFilter.impactArea.filter((ia) => ia !== impactArea),
       });
     }
   };
@@ -65,18 +82,18 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
     if (checked) {
       setIdeaFilter({
         ...ideaFilter,
-        audience: [...ideaFilter.audience, audience]
+        audience: [...ideaFilter.audience, audience],
       });
     } else {
       setIdeaFilter({
         ...ideaFilter,
-        audience: ideaFilter.audience.filter(a => a !== audience)
+        audience: ideaFilter.audience.filter((a) => a !== audience),
       });
     }
   };
 
   return (
-    <div 
+    <div
       ref={dropdownRef}
       className="absolute top-full right-0 mt-1 bg-white border border-neutral-200 rounded-lg shadow-lg p-4 z-50 w-80"
     >
@@ -86,9 +103,12 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Borough:</label>
         <select
-          value={ideaFilter.borough || ''}
+          value={ideaFilter.borough || ""}
           onChange={(e) =>
-            setIdeaFilter({ ...ideaFilter, borough: e.target.value as Borough || null })
+            setIdeaFilter({
+              ...ideaFilter,
+              borough: (e.target.value as Borough) || null,
+            })
           }
           className="w-full p-2 text-sm border rounded"
         >
@@ -106,9 +126,9 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
         <label className="block text-xs font-medium mb-2">Stage:</label>
         <div className="space-y-1">
           {[
-            { value: 'submitted', label: 'Submitted' },
-            { value: 'BA', label: 'Ballot Action' },
-            { value: 'ballot', label: 'Finalist' }
+            { value: "submitted", label: "Submitted" },
+            { value: "BA", label: "Ballot Action" },
+            { value: "ballot", label: "Finalist" },
           ].map(({ value, label }) => (
             <label key={value} className="flex items-center text-sm">
               <input
@@ -116,9 +136,13 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
                 name="stage"
                 value={value}
                 checked={ideaFilter.stage === value}
-                onChange={(e) =>
-                  setIdeaFilter({ ...ideaFilter, stage: e.target.value as any })
-                }
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setIdeaFilter({
+                    ...ideaFilter,
+                    stage: e.target.value as IdeaStage,
+                  });
+                }}
                 className="mr-2"
               />
               {label}
@@ -149,7 +173,9 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
               <input
                 type="checkbox"
                 checked={ideaFilter.impactArea.includes(value)}
-                onChange={(e) => handleImpactAreaChange(value, e.target.checked)}
+                onChange={(e) =>
+                  handleImpactAreaChange(value, e.target.checked)
+                }
                 className="mr-2"
               />
               {label}
@@ -180,7 +206,9 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
               <input
                 type="checkbox"
                 checked={ideaFilter.audience.includes(audience)}
-                onChange={(e) => handleAudienceChange(audience, e.target.checked)}
+                onChange={(e) =>
+                  handleAudienceChange(audience, e.target.checked)
+                }
                 className="mr-2"
               />
               {audience}
