@@ -270,7 +270,9 @@ const Map = () => {
             <></>
           )}
           <CircleWrapper
-            ideas={selectedIdeas ? selectedIdeas : allIdeas ? allIdeas : []}
+            ideas={
+              selectedIdeas ? selectedIdeas : filteredIdeas ? filteredIdeas : []
+            }
             expanded={true}
             categorization={categorization}
           />
