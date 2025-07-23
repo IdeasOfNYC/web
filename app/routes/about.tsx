@@ -1,13 +1,16 @@
 import { Link } from "react-router";
+import Header from "~/components/Header";
 
 export default function About() {
   return (
+      <div className="bg-neutral-50 min-h-screen">
+      <Header />
     <section className="min-h-screen bg-neutral-50 text-neutral-800 px-6 sm:px-12 pt-28 pb-20 max-w-5xl mx-auto">
       <h1 className="text-4xl sm:text-5xl font-bold font-display mb-6 text-center uppercase">
         ABOUT THE PROCESS
       </h1>
 
-      <p className="text-lg sm:text-xl mb-10 text-center max-w-3xl mx-auto text-neutral-600 font-light">
+<p className="text-lg sm:text-xl mb-10 text-center max-w-3xl mx-auto text-neutral-600 font-light">
         <i>The People’s Money</i> is NYC’s annual citywide participatory budgeting process, giving New Yorkers a direct voice in how part of the city budget is spent.
       </p>
 
@@ -63,13 +66,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="mt-16 text-center">
-        <Link to="/">
-<button className="px-6 py-3 bg-green-100 border border-green-600 border-dashed font-semibold hover:bg-green-50 hover:border-green-500 rounded-md shadow font-display uppercase">
-            ← Back to Home
-          </button>
-        </Link>
-      </div>
     </section>
+      </div>
   );
 }
