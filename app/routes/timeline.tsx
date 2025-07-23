@@ -454,43 +454,41 @@ const Timeline: React.FC = () => {
     </>
   )}
 </p>
-            <div className="w-full flex justify-between items-center pt-16">
-              <BlockButton
-                message="Previous Stage"
-                handleClick={() =>
-                  ideaFilter.stage === "ballot"
-                    ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
-                    : setIdeaFilter({ ...ideaFilter, stage: "submitted" })
-                }
-              ></BlockButton>
-              <div className="flex items-end w-full justify-center pr-32 pl-16">
-                <TimelineCircle
-                  first={true}
-                  toggled={true}
-                  label="Submission"
-                ></TimelineCircle>
-                <TimelineCircle
-                  first={false}
-                  toggled={
-                    ideaFilter.stage === "BA" || ideaFilter.stage === "ballot"
-                  }
-                  label="Borough Assembly"
-                ></TimelineCircle>
-                <TimelineCircle
-                  first={false}
-                  toggled={ideaFilter.stage === "ballot"}
-                  label="Final Ballot"
-                ></TimelineCircle>
-              </div>
-              <BlockButton
-                message="Next Stage"
-                handleClick={() =>
-                  ideaFilter.stage === "submitted"
-                    ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
-                    : setIdeaFilter({ ...ideaFilter, stage: "ballot" })
-                }
-              ></BlockButton>
-            </div>
+ <div className="w-full flex justify-between items-center pt-16">
+  <BlockButton
+    message="Previous Stage"
+    handleClick={() =>
+      ideaFilter.stage === "ballot"
+        ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
+        : setIdeaFilter({ ...ideaFilter, stage: "submitted" })
+    }
+    disabled={ideaFilter.stage === "submitted"} // 🔹 disables at first stage
+  />
+
+  <div className="flex items-end w-full justify-center pr-32 pl-16">
+    <TimelineCircle first={true} toggled={true} label="Submission" />
+    <TimelineCircle
+      first={false}
+      toggled={ideaFilter.stage === "BA" || ideaFilter.stage === "ballot"}
+      label="Borough Assembly"
+    />
+    <TimelineCircle
+      first={false}
+      toggled={ideaFilter.stage === "ballot"}
+      label="Final Ballot"
+    />
+  </div>
+
+  <BlockButton
+    message="Next Stage"
+    handleClick={() =>
+      ideaFilter.stage === "submitted"
+        ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
+        : setIdeaFilter({ ...ideaFilter, stage: "ballot" })
+    }
+    disabled={ideaFilter.stage === "ballot"} // 🔹 disables at last stage
+  />
+</div>
           </div>
         )}
       </div>
