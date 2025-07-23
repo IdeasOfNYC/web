@@ -437,12 +437,23 @@ const Timeline: React.FC = () => {
                 ? "REVIEW IN BOROUGH ASSEMBLY"
                 : "ADDED TO PUBLIC BALLOT FOR VOTING"}
             </h1>
-            <p>
-              Lorem ipsum dolor sit amet consecetur, adipisicing elit. Beatae
-              doloremque iure nihil natus nisi quas obcaecati accusantium, alias
-              voluptatibus rem incidunt commodi labore aperiam ullam quasi eius!
-              Necessitatibus, accusamus amet!
-            </p>
+<p className="text-center max-w-2xl text-neutral-700 mt-4 mb-12">
+  {ideaFilter.stage === "submitted" && (
+    <>
+      Community members submit ideas that address local needs and priorities. These ideas form the foundation of the participatory budgeting process.
+    </>
+  )}
+  {ideaFilter.stage === "BA" && (
+    <>
+      Ideas are reviewed by the Borough Assembly (BA), a team of community members and staff who assess feasibility, equity, and impact before selecting projects for the ballot.
+    </>
+  )}
+  {ideaFilter.stage === "ballot" && (
+    <>
+      Finalist ideas appear on the ballot, where New Yorkers vote on which projects should receive funding for implementation in their neighborhoods.
+    </>
+  )}
+</p>
             <div className="w-full flex justify-between items-center pt-16">
               <BlockButton
                 message="Previous Stage"

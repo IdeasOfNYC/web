@@ -35,8 +35,9 @@ export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
           {ideas.length}
         </div>
         {expanded ? (
-          <span className="text-sm text-neutral-700 min-w-36">Submitted</span>
-        ) : (
+<span className="text-sm text-neutral-700 min-w-36">
+  Idea Submission
+</span>        ) : (
           <></>
         )}
       </div>
