@@ -7,11 +7,11 @@ export interface StageCirclesProps {
 }
 
 export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
-  const baIdeas = useMemo(() => {
-    return ideas.filter((idea) => {
-      return idea.status !== null;
-    });
-  }, [ideas]);
+const baIdeas = useMemo(() => {
+  return ideas.filter(
+    (idea) => idea.status !== null && !idea.status?.FinalBallot
+  );
+}, [ideas]);
 
   const ballotIdeas = useMemo(() => {
     return ideas.filter((idea) => {
