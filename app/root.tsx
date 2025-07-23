@@ -69,17 +69,12 @@ export default function App() {
       const boroughFilter = ideaFilter.borough
         ? idea.borough === ideaFilter.borough
         : true;
-      const impactAreaFilter =
-        ideaFilter.impactArea.length === 0 ||
-        ideaFilter.impactArea.every((someImpactArea) => {
-          return idea.impactArea.includes(someImpactArea);
-        });
-      const audienceFilter =
-        ideaFilter.audience.length === 0 ||
-        ideaFilter.audience.every((someAudience) => {
-          console.log(someAudience, idea.audience);
-          return idea.audience.includes(someAudience);
-        });
+      const impactAreaFilter = ideaFilter.impactArea.length === 0 || ideaFilter.impactArea.every((someImpactArea) => {
+        return idea.impactArea.includes(someImpactArea);
+      });
+      const audienceFilter = ideaFilter.audience.length === 0 || ideaFilter.audience.every((someAudience) => {
+        return idea.audience.includes(someAudience);
+      });
       const keywordFilter = ideaFilter.keyword
         ? idea.solution
             .toLocaleLowerCase()
@@ -91,13 +86,7 @@ export default function App() {
           : false) ||
         (ideaFilter.stage === "BA" && idea.status ? true : false) ||
         ideaFilter.stage === "submitted";
-      return (
-        boroughFilter &&
-        impactAreaFilter &&
-        audienceFilter &&
-        keywordFilter &&
-        stageFilter
-      );
+      return boroughFilter && impactAreaFilter && audienceFilter && keywordFilter && stageFilter;
     },
     [
       ideaFilter.borough,

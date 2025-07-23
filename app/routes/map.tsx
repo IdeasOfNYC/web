@@ -55,8 +55,13 @@ const Map = () => {
 
   const [selectedIdeas, setSelectedIdeas] = useState<Idea[] | null>(null);
 
-  const { ideaFilter, setIdeaFilter, filteredIdeas, setSelectedIdea } =
-    useContext(IdeaContext);
+  const {
+    ideaFilter,
+    setIdeaFilter,
+    filteredIdeas,
+    allIdeas,
+    setSelectedIdea,
+  } = useContext(IdeaContext);
 
   const boroughs: { name: Borough; ref: RefObject<SVGPathElement | null> }[] =
     useMemo(
