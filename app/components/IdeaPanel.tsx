@@ -14,12 +14,11 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
   const audienceToDisplay = showAllAudiences ? idea.audience : idea.audience.slice(0, 3);
   const impactAreasToDisplay = showAllImpactAreas ? idea.impactArea : idea.impactArea.slice(0, 3);
 
-  const getStageProgress = () => {
-    if (!idea.status) return 1;
-    if (idea.status.FinalBallot) return 4;
-    if (idea.status.Final20Ideas) return 3;
-    return 2;
-  };
+const getStageProgress = () => {
+  if (!idea.status) return 1; // Submitted
+  if (idea.status.FinalBallot) return 3; // On ballot
+  return 2; // Advanced to BA but not on ballot
+};
 
   const currentStage = getStageProgress();
 
@@ -98,20 +97,18 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
 
       <div className="border-t border-neutral-200 pt-6">
         <div className="flex justify-between text-center text-sm text-neutral-500">
-          {["Submission", "Round 1", "Round 2", "Accepted to Ballot"].map(
-            (stage, idx) => (
-              <div key={idx} className="flex flex-col items-center flex-1">
-                <div
-                  className={`w-5 h-5 rounded-full border-2 mb-1 ${
-                    idx < currentStage
-                      ? "bg-yellow-400 border-yellow-500"
-                      : "bg-neutral-200 border-neutral-300"
-                  }`}
-                ></div>
-                <span>{stage}</span>
-              </div>
-            )
-          )}
+ {["Submitted", "Advanced to BA", "Finalist"].map((stage, idx) => (
+  <div key={idx} className="flex flex-col items-center flex-1">
+    <div
+      className={`w-5 h-5 rounded-full border-2 mb-1 ${
+        idx + 1 <= currentStage
+          ? "bg-yellow-400 border-yellow-500"
+          : "bg-neutral-200 border-neutral-300"
+      }`}
+    ></div>
+    <span>{stage}</span>
+  </div>
+))}
         </div>
       </div>
     </div>
