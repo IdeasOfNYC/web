@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { FC } from "react";
 import type { Idea } from "~/types";
 import { toTitleCase, getAdvancementStyles } from "~/utils";
@@ -14,6 +14,36 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
   const audienceToDisplay = showAllAudiences ? idea.audience : idea.audience.slice(0, 3);
   const impactAreasToDisplay = showAllImpactAreas ? idea.impactArea : idea.impactArea.slice(0, 3);
 
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        handleClose(idea);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [idea, handleClose]);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        handleClose(idea);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [idea, handleClose]);
+
 const getStageProgress = () => {
   if (!idea.status) return 1; // Submitted
   if (idea.status.FinalBallot) return 3; // On ballot
@@ -23,7 +53,7 @@ const getStageProgress = () => {
   const currentStage = getStageProgress();
 
   return (
-    <div className="w-full max-w-3xl pt-6 px-6 pb-6 border border-neutral-200 bg-white flex flex-col gap-6 relative rounded-xl shadow-lg">
+    <div ref={panelRef} className="w-full max-w-3xl pt-6 px-6 pb-6 border border-neutral-200 bg-white flex flex-col gap-6 relative rounded-xl shadow-lg">
       <button
         className="absolute top-3 right-3 px-3 py-1 border border-neutral-200 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50 rounded-lg text-sm"
         onClick={() => handleClose(idea)}
