@@ -101,32 +101,6 @@ export const FilterPopup = ({ isOpen, onClose }: FilterPopupProps) => {
         </select>
       </div>
 
-      {/* Stage */}
-      <div className="mb-4">
-        <label className="block text-xs font-medium mb-2">Stage:</label>
-        <div className="space-y-1">
-          {[
-            { value: 'submitted', label: 'Submitted' },
-            { value: 'BA', label: 'Ballot Action' },
-            { value: 'ballot', label: 'Finalist' }
-          ].map(({ value, label }) => (
-            <label key={value} className="flex items-center text-sm">
-              <input
-                type="radio"
-                name="stage"
-                value={value}
-                checked={ideaFilter.stage === value}
-                onChange={(e) =>
-                  setIdeaFilter({ ...ideaFilter, stage: e.target.value as any })
-                }
-                className="mr-2"
-              />
-              {label}
-            </label>
-          ))}
-        </div>
-      </div>
-
       {/* Impact Area */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-2">Impact Area:</label>
