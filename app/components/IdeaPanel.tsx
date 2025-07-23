@@ -11,49 +11,38 @@ export interface IdeaPanelProps {
 export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
   const [showAllAudiences, setShowAllAudiences] = useState(false);
   const [showAllImpactAreas, setShowAllImpactAreas] = useState(false);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        handleClose(idea);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [idea, handleClose]);
+
   const audienceToDisplay = showAllAudiences ? idea.audience : idea.audience.slice(0, 3);
   const impactAreasToDisplay = showAllImpactAreas ? idea.impactArea : idea.impactArea.slice(0, 3);
 
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
-        handleClose(idea);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [idea, handleClose]);
-
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
-        handleClose(idea);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [idea, handleClose]);
-
-const getStageProgress = () => {
-  if (!idea.status) return 1; // Submitted
-  if (idea.status.FinalBallot) return 3; // On ballot
-  return 2; // Advanced to BA but not on ballot
-};
+  const getStageProgress = () => {
+    if (!idea.status) return 1; // Submitted
+    if (idea.status.FinalBallot) return 3; // Finalist
+    return 2; // Advanced to BA
+  };
 
   const currentStage = getStageProgress();
 
   return (
-    <div ref={panelRef} className="w-full max-w-3xl pt-6 px-6 pb-6 border border-neutral-200 bg-white flex flex-col gap-6 relative rounded-xl shadow-lg">
+    <div
+      ref={panelRef}
+      className="w-full max-w-3xl pt-6 px-6 pb-6 border border-neutral-200 bg-white flex flex-col gap-6 relative rounded-xl shadow-lg"
+    >
       <button
         className="absolute top-3 right-3 px-3 py-1 border border-neutral-200 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50 rounded-lg text-sm"
         onClick={() => handleClose(idea)}
@@ -81,7 +70,10 @@ const getStageProgress = () => {
           <label className="text-sm text-neutral-600">Impact Area:</label>
           <div className="flex flex-wrap gap-2">
             {impactAreasToDisplay.map((area, idx) => (
-              <span key={idx} className="border border-neutral-300 px-2 py-1 rounded-full text-sm">
+              <span
+                key={idx}
+                className="border border-neutral-300 px-2 py-1 rounded-full text-sm"
+              >
                 {area}
               </span>
             ))}
@@ -99,7 +91,10 @@ const getStageProgress = () => {
           <label className="text-sm text-neutral-600">Audience:</label>
           <div className="flex flex-wrap gap-2">
             {audienceToDisplay.map((group, idx) => (
-              <span key={idx} className="border border-neutral-300 px-2 py-1 rounded-full text-sm">
+              <span
+                key={idx}
+                className="border border-neutral-300 px-2 py-1 rounded-full text-sm"
+              >
                 {group}
               </span>
             ))}
@@ -117,28 +112,32 @@ const getStageProgress = () => {
 
       <div>
         <h2 className="text-sm font-semibold mb-1 text-neutral-700">Challenge</h2>
-        <p className="text-sm text-neutral-700 whitespace-pre-line font-sans">{idea.challenge}</p>
+        <p className="text-sm text-neutral-700 whitespace-pre-line font-sans">
+          {idea.challenge}
+        </p>
       </div>
 
       <div>
         <h2 className="text-sm font-semibold mb-1 text-neutral-700">Proposed Solution</h2>
-        <p className="text-sm text-neutral-700 whitespace-pre-line font-sans">{idea.solution}</p>
+        <p className="text-sm text-neutral-700 whitespace-pre-line font-sans">
+          {idea.solution}
+        </p>
       </div>
 
       <div className="border-t border-neutral-200 pt-6">
         <div className="flex justify-between text-center text-sm text-neutral-500">
- {["Submitted", "Advanced to BA", "Finalist"].map((stage, idx) => (
-  <div key={idx} className="flex flex-col items-center flex-1">
-    <div
-      className={`w-5 h-5 rounded-full border-2 mb-1 ${
-        idx + 1 <= currentStage
-          ? "bg-yellow-400 border-yellow-500"
-          : "bg-neutral-200 border-neutral-300"
-      }`}
-    ></div>
-    <span>{stage}</span>
-  </div>
-))}
+          {["Submitted", "Advanced to BA", "Finalist"].map((stage, idx) => (
+            <div key={idx} className="flex flex-col items-center flex-1">
+              <div
+                className={`w-5 h-5 rounded-full border-2 mb-1 ${
+                  idx + 1 <= currentStage
+                    ? "bg-yellow-400 border-yellow-500"
+                    : "bg-neutral-200 border-neutral-300"
+                }`}
+              ></div>
+              <span>{stage}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
