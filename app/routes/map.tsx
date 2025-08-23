@@ -8,8 +8,8 @@ import {
   type RefObject,
 } from "react";
 import { IACircles } from "~/components/IACircles";
-import { StageScatter } from "~/components/StageScatter";
-import { StageCircles } from "~/components/StageCircles";
+import { PhaseScatter } from "~/components/PhaseScatter";
+import { PhaseCircles } from "~/components/PhaseCircles";
 import { IdeaContext } from "~/context/IdeaContext";
 import { BOROUGHS, type Borough, type Idea } from "~/types";
 import { IAScatter } from "~/components/IAScatter";
@@ -20,7 +20,7 @@ interface Midpoint {
   name: Borough;
 }
 
-type Categorization = "stage" | "impact";
+type Categorization = "phase" | "impact";
 
 interface CircleWrapperProps {
   categorization: Categorization;
@@ -35,7 +35,7 @@ const CircleWrapper: FC<CircleWrapperProps> = ({
 }) => {
   if (categorization === "impact")
     return <IACircles ideas={ideas} expanded={expanded}></IACircles>;
-  else return <StageCircles ideas={ideas} expanded={expanded}></StageCircles>;
+  else return <PhaseCircles ideas={ideas} expanded={expanded}></PhaseCircles>;
 };
 
 const Map = () => {
@@ -49,8 +49,8 @@ const Map = () => {
 
   const [midpoints, setMidpoints] = useState<Midpoint[]>([]);
 
-  const [categorization, setCategorization] = useState<"stage" | "impact">(
-    "stage"
+  const [categorization, setCategorization] = useState<"phase" | "impact">(
+    "phase"
   );
 
   const [selectedIdeas, setSelectedIdeas] = useState<Idea[] | null>(null);
@@ -71,8 +71,8 @@ const Map = () => {
     );
 
   useEffect(() => {
-    if (ideaFilter.stage !== "submitted")
-      setIdeaFilter({ ...ideaFilter, stage: "submitted" });
+    if (ideaFilter.phase !== "submitted")
+      setIdeaFilter({ ...ideaFilter, phase: "submitted" });
   }, [ideaFilter, setIdeaFilter]);
 
   useEffect(() => {
@@ -317,11 +317,11 @@ const Map = () => {
           ))
         ) : (
           <div className="absolute left-1/2 top-1/2 -translate-1/2 max-w-xl">
-            {categorization === "stage" ? (
-              <StageScatter
+            {categorization === "phase" ? (
+              <PhaseScatter
                 ideas={filteredIdeas ? filteredIdeas : []}
                 handleSelection={setSelectedIdea}
-              ></StageScatter>
+              ></PhaseScatter>
             ) : (
               <IAScatter
                 ideas={filteredIdeas ? filteredIdeas : []}
@@ -337,10 +337,10 @@ const Map = () => {
             className="w-min p-2 border border-neutral2 bg-white hover:bg-neutral-50 active:bg-neutral-100 rounded-md cursor-pointer"
             value={categorization}
             onChange={(e) =>
-              setCategorization(e.target.value as "stage" | "impact")
+              setCategorization(e.target.value as "phase" | "impact")
             }
           >
-            <option value="stage">Stage</option>
+            <option value="phase">Phase</option>
             <option value="impact">Impact</option>
           </select>
           <p>from</p>

@@ -42,7 +42,7 @@ export const IAScatter: FC<IAScatterProps> = ({ ideas, handleSelection }) => {
   return (
     <div className=" p-4 border border-neutral-500 border-dashed relative rounded-md flex flex-col bg-white items-center gap-2">
       <p className="font-light text-neutral-400">
-        Hover to preview, click to open
+        Hover over circles to preview, click to open
       </p>
       <div ref={parentRef} className="flex flex-col gap-2 relative">
         {sortedImpactAreas.map(([impactAreaName, ideasInArea]) => (

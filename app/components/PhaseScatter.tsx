@@ -3,12 +3,12 @@ import type { Idea } from "~/types";
 import { truncate } from "~/utils";
 import { ScatterCircle } from "./ScatterCircle";
 
-export interface StageScatterProps {
+export interface PhaseScatterProps {
   ideas: Idea[];
   handleSelection: (Idea: Idea) => void;
 }
 
-export const StageScatter: FC<StageScatterProps> = ({
+export const PhaseScatter: FC<PhaseScatterProps> = ({
   ideas,
   handleSelection,
 }) => {
@@ -51,7 +51,7 @@ export const StageScatter: FC<StageScatterProps> = ({
   return (
     <div className=" p-4 border border-neutral-500 border-dashed relative rounded-md flex flex-col bg-white items-center gap-2">
       <p className="font-light text-neutral-400">
-        Hover to preview, click to open
+        Hover over circles to preview, click to open
       </p>
       <div ref={parentRef} className="flex flex-col gap-2 relative">
         <div className="flex flex-wrap">

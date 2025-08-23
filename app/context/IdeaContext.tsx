@@ -18,7 +18,7 @@ export const IdeaContext = createContext<IdeaContextType>({
     borough: null,
     impactArea: [],
     audience: [],
-    stage: "submitted",
+    phase: "submitted",
   },
   selectedIdea: null,
   setSelectedIdea: () => {},

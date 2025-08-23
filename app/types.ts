@@ -46,14 +46,14 @@ export interface Idea {
   status: Option<BAStatus>;
 }
 
-export type IdeaStage = "submitted" | "BA" | "ballot";
+export type IdeaPhase = "submitted" | "BA" | "ballot";
 
 export interface IdeaFilter {
   keyword: Option<string>;
   borough: Option<Borough>;
   impactArea: string[];
   audience: string[];
-  stage: IdeaStage;
+  phase: IdeaPhase;
 }
 
 export function isBAStatus(obj: unknown): obj is BAStatus {

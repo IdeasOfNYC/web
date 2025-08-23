@@ -151,11 +151,11 @@ const Timeline: React.FC = () => {
   const ideaContext = useContext(IdeaContext);
   const { ideaFilter, setIdeaFilter, filteredIdeas } = ideaContext;
 
-  const [stageIdeas, setStageIdeas] = useState<Idea[]>([]);
+  const [phaseIdeas, setPhaseIdeas] = useState<Idea[]>([]);
   const [didNotAdvance, setDidNotAdvance] = useState<Idea[]>([]);
   const [advanced, setAdvanced] = useState<Idea[]>([]);
   const [scatterIdeas, setScatterIdeas] = useState<
-    "stage" | "did not advance" | "advanced" | null
+    "phase" | "did not advance" | "advanced" | null
   >(null);
 
   const [positions, setPositions] = useState<{
@@ -175,7 +175,7 @@ const Timeline: React.FC = () => {
     updatePositions();
     window.addEventListener("resize", updatePositions);
     return () => window.removeEventListener("resize", updatePositions);
-  }, [ideaFilter.stage]);
+  }, [ideaFilter.phase]);
 
   const submittedIdeas = useMemo(() => {
     return filteredIdeas || [];
@@ -212,16 +212,16 @@ const Timeline: React.FC = () => {
   }, [filteredIdeas]);
 
   useEffect(() => {
-    if (ideaFilter.stage === "submitted") {
-      setStageIdeas(submittedIdeas);
+    if (ideaFilter.phase === "submitted") {
+      setPhaseIdeas(submittedIdeas);
       setAdvanced(baIdeas);
       setDidNotAdvance(didNotAdvanceBA);
-    } else if (ideaFilter.stage === "BA") {
-      setStageIdeas(baIdeas);
+    } else if (ideaFilter.phase === "BA") {
+      setPhaseIdeas(baIdeas);
       setAdvanced(ballotIdeas);
       setDidNotAdvance(didNotAdvanceBallot);
     } else {
-      setStageIdeas(ballotIdeas);
+      setPhaseIdeas(ballotIdeas);
       setAdvanced(final20);
       setDidNotAdvance(didNotAdvanceFinal20);
     }
@@ -232,13 +232,13 @@ const Timeline: React.FC = () => {
     didNotAdvance,
     didNotAdvanceBA,
     didNotAdvanceBallot,
-    ideaFilter.stage,
+    ideaFilter.phase,
     submittedIdeas,
     didNotAdvanceFinal20,
   ]);
 
-  const getStageColors = () => {
-    switch (ideaFilter.stage) {
+  const getPhaseColors = () => {
+    switch (ideaFilter.phase) {
       case "submitted":
         return {
           top: "bg-amber-300 hover:bg-amber-200 border-amber-500",
@@ -270,7 +270,7 @@ const Timeline: React.FC = () => {
     }
   };
 
-  const colors = getStageColors();
+  const colors = getPhaseColors();
 
   return (
     <div className="w-full h-full flex flex-col gap-4 items-center justify-between py-16 overflow-y-scroll pb-8">
@@ -325,20 +325,20 @@ const Timeline: React.FC = () => {
         <button
           ref={topRef}
           className={`${
-            ideaFilter.stage === "submitted"
+            ideaFilter.phase === "submitted"
               ? "bg-yellow3 hover:bg-yellow2 active:bg-yellow1 border-yellow6 hover:border-yellow5 active:border-yellow4"
-              : ideaFilter.stage === "BA"
+              : ideaFilter.phase === "BA"
               ? "bg-green2 hover:bg-green1 active:bg-green0 border-green5 hover:border-green4 active:border-green3"
               : "bg-cyan3 hover:bg-cyan2 active:bg-cyan1 border-cyan-500 hover:border-cyan-400"
           } w-full max-w-2xl h-12 rounded-full flex items-center justify-center border cursor-pointer relative z-10`}
-          onClick={() => setScatterIdeas("stage")}
+          onClick={() => setScatterIdeas("phase")}
         >
           <p>
-            <span className="font-medium">{stageIdeas.length} </span>
+            <span className="font-medium">{phaseIdeas.length} </span>
             {`ideas ${
-              ideaFilter.stage === "submitted"
+              ideaFilter.phase === "submitted"
                 ? "submitted"
-                : ideaFilter.stage === "BA"
+                : ideaFilter.phase === "BA"
                 ? "advanced to Borough Assembly (BA) review"
                 : "added to final ballot"
             }`}
@@ -355,9 +355,9 @@ const Timeline: React.FC = () => {
             <p className="text-nowrap">
               <span className="font-medium">{didNotAdvance.length} </span>
               {`ideas ${
-                ideaFilter.stage === "submitted"
+                ideaFilter.phase === "submitted"
                   ? "not advanced to Borough Assembly (BA) review"
-                  : ideaFilter.stage === "BA"
+                  : ideaFilter.phase === "BA"
                   ? "not added to final ballot"
                   : "not chosen for implementation"
               }`}
@@ -367,17 +367,17 @@ const Timeline: React.FC = () => {
           <button
             ref={rightRef}
             className={`${
-              ideaFilter.stage === "submitted"
+              ideaFilter.phase === "submitted"
                 ? "bg-green2 hover:bg-green1 active:bg-green0 border-green5 hover:border-green4 active:border-green30"
-                : ideaFilter.stage === "BA"
+                : ideaFilter.phase === "BA"
                 ? "bg-cyan3 hover:bg-cyan2 active:bg-cyan1 border-cyan-500 hover:border-cyan-40"
                 : "bg-purple-200 hover:bg-purple-100 border-purple-500 hover:border-purple-400"
             } w-min max-w-2xl h-12 rounded-full flex items-center justify-center border px-8 cursor-pointer relative z-10`}
             onClick={() => {
-              if (ideaFilter.stage !== "ballot")
+              if (ideaFilter.phase !== "ballot")
                 setIdeaFilter({
                   ...ideaFilter,
-                  stage: ideaFilter.stage === "BA" ? "ballot" : "BA",
+                  phase: ideaFilter.phase === "BA" ? "ballot" : "BA",
                 });
               else setScatterIdeas("advanced");
             }}
@@ -385,9 +385,9 @@ const Timeline: React.FC = () => {
             <p className="text-nowrap">
               <span className="font-medium">{advanced.length} </span>
               {`ideas ${
-                ideaFilter.stage === "submitted"
+                ideaFilter.phase === "submitted"
                   ? "advanced to Borough Assembly (BA) review"
-                  : ideaFilter.stage === "BA"
+                  : ideaFilter.phase === "BA"
                   ? "added to final ballot"
                   : "chosen for implementation"
               }`}
@@ -411,7 +411,7 @@ const Timeline: React.FC = () => {
                     ? advanced
                     : scatterIdeas === "did not advance"
                     ? didNotAdvance
-                    : stageIdeas
+                    : phaseIdeas
                 }
                 handleSelection={ideaContext.setSelectedIdea}
               ></IAScatter>
@@ -422,7 +422,7 @@ const Timeline: React.FC = () => {
                   ? advanced
                   : scatterIdeas === "did not advance"
                   ? didNotAdvance
-                  : stageIdeas
+                  : phaseIdeas
               }
               expanded={true}
               horizontal={true}
@@ -431,24 +431,24 @@ const Timeline: React.FC = () => {
         ) : (
           <div className="w-4xl bg-white h-full border border-neutral-300 rounded-md flex flex-col items-center justify-between p-8">
             <h1 className="font-display text-2xl font-medium">
-              {ideaFilter.stage === "submitted"
+              {ideaFilter.phase === "submitted"
                 ? "IDEA CREATION AND SUBMISSION"
-                : ideaFilter.stage === "BA"
+                : ideaFilter.phase === "BA"
                 ? "REVIEW IN BOROUGH ASSEMBLY"
                 : "ADDED TO PUBLIC BALLOT FOR VOTING"}
             </h1>
 <p className="text-center max-w-2xl text-neutral-700 mt-4 mb-12">
-  {ideaFilter.stage === "submitted" && (
+  {ideaFilter.phase === "submitted" && (
     <>
       Community members submit ideas that address local needs and priorities. These ideas form the foundation of the participatory budgeting process.
     </>
   )}
-  {ideaFilter.stage === "BA" && (
+  {ideaFilter.phase === "BA" && (
     <>
       Ideas are reviewed by the Borough Assembly (BA), a team of community members and staff who assess feasibility, equity, and impact before selecting projects for the ballot.
     </>
   )}
-  {ideaFilter.stage === "ballot" && (
+  {ideaFilter.phase === "ballot" && (
     <>
       Finalist ideas appear on the ballot, where New Yorkers vote on which projects should receive funding for implementation in their neighborhoods.
     </>
@@ -456,37 +456,37 @@ const Timeline: React.FC = () => {
 </p>
  <div className="w-full flex justify-between items-center pt-16">
   <BlockButton
-    message="Previous Stage"
+    message="Previous Phase"
     handleClick={() =>
-      ideaFilter.stage === "ballot"
-        ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
-        : setIdeaFilter({ ...ideaFilter, stage: "submitted" })
+      ideaFilter.phase === "ballot"
+        ? setIdeaFilter({ ...ideaFilter, phase: "BA" })
+        : setIdeaFilter({ ...ideaFilter, phase: "submitted" })
     }
-    disabled={ideaFilter.stage === "submitted"} // 🔹 disables at first stage
+    disabled={ideaFilter.phase === "submitted"} // 🔹 disables at first phase
   />
 
   <div className="flex items-end w-full justify-center pr-32 pl-16">
     <TimelineCircle first={true} toggled={true} label="Submission" />
     <TimelineCircle
       first={false}
-      toggled={ideaFilter.stage === "BA" || ideaFilter.stage === "ballot"}
+      toggled={ideaFilter.phase === "BA" || ideaFilter.phase === "ballot"}
       label="Borough Assembly"
     />
     <TimelineCircle
       first={false}
-      toggled={ideaFilter.stage === "ballot"}
+      toggled={ideaFilter.phase === "ballot"}
       label="Final Ballot"
     />
   </div>
 
   <BlockButton
-    message="Next Stage"
+    message="Next Phase"
     handleClick={() =>
-      ideaFilter.stage === "submitted"
-        ? setIdeaFilter({ ...ideaFilter, stage: "BA" })
-        : setIdeaFilter({ ...ideaFilter, stage: "ballot" })
+      ideaFilter.phase === "submitted"
+        ? setIdeaFilter({ ...ideaFilter, phase: "BA" })
+        : setIdeaFilter({ ...ideaFilter, phase: "ballot" })
     }
-    disabled={ideaFilter.stage === "ballot"} // 🔹 disables at last stage
+    disabled={ideaFilter.phase === "ballot"} // 🔹 disables at last phase
   />
 </div>
           </div>

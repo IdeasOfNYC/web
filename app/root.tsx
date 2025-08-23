@@ -55,7 +55,7 @@ export default function App() {
     borough: null,
     impactArea: [],
     audience: [],
-    stage: "submitted",
+    phase: "submitted",
   });
 
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
@@ -85,18 +85,18 @@ export default function App() {
             .toLocaleLowerCase()
             .includes(ideaFilter.keyword.toLocaleLowerCase())
         : true;
-      const stageFilter =
-        (ideaFilter.stage === "ballot" && idea.status?.FinalBallot
+      const phaseFilter =
+        (ideaFilter.phase === "ballot" && idea.status?.FinalBallot
           ? true
           : false) ||
-        (ideaFilter.stage === "BA" && idea.status ? true : false) ||
-        ideaFilter.stage === "submitted";
+        (ideaFilter.phase === "BA" && idea.status ? true : false) ||
+        ideaFilter.phase === "submitted";
       return (
         boroughFilter &&
         impactAreaFilter &&
         audienceFilter &&
         keywordFilter &&
-        stageFilter
+        phaseFilter
       );
     },
     [
@@ -104,7 +104,7 @@ export default function App() {
       ideaFilter.impactArea,
       ideaFilter.audience,
       ideaFilter.keyword,
-      ideaFilter.stage,
+      ideaFilter.phase,
     ]
   );
 

@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import type { Idea } from "~/types";
 
-export interface StageCirclesProps {
+export interface PhaseCirclesProps {
   ideas: Idea[];
   expanded?: boolean;
 }
 
-export function StageCircles({ ideas, expanded = false }: StageCirclesProps) {
+export function PhaseCircles({ ideas, expanded = false }: PhaseCirclesProps) {
 const baIdeas = useMemo(() => {
   return ideas.filter(
     (idea) => idea.status !== null && !idea.status?.FinalBallot
@@ -15,7 +15,7 @@ const baIdeas = useMemo(() => {
 
   const ballotIdeas = useMemo(() => {
     return ideas.filter((idea) => {
-      // Logic based on root.tsx's stageFilter for "ballot"
+      // Logic based on root.tsx's phaseFilter for "ballot"
       return idea.status?.FinalBallot;
     });
   }, [ideas]);
