@@ -125,18 +125,31 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
 
       <div className="border-t border-neutral-200 pt-6">
         <div className="flex justify-between text-center text-sm text-neutral-500">
-          {["Submitted", "Advanced to BA", "Finalist"].map((phase, idx) => (
-            <div key={idx} className="flex flex-col items-center flex-1">
-              <div
-                className={`w-5 h-5 rounded-full border-2 mb-1 ${
-                  idx + 1 <= currentPhase
-                    ? "bg-yellow-400 border-yellow-500"
-                    : "bg-neutral-200 border-neutral-300"
-                }`}
-              ></div>
-              <span>{phase}</span>
-            </div>
-          ))}
+          {["Submitted", "Advanced to BA", "Finalist"].map((phase, idx) => {
+            const getCircleColors = (phaseIndex: number, isActive: boolean) => {
+              if (!isActive) return "bg-neutral-200 border-neutral-300";
+              
+              switch (phaseIndex) {
+                case 0: // Submitted - Use yellow2 color
+                  return "bg-yellow2 border-yellow2";
+                case 1: // Advanced to BA - Use green2 color
+                  return "bg-green2 border-green2";
+                case 2: // Finalist - Use cyan3 color
+                  return "bg-cyan3 border-cyan3";
+                default:
+                  return "bg-neutral-200 border-neutral-300";
+              }
+            };
+
+            return (
+              <div key={idx} className="flex flex-col items-center flex-1">
+                <div
+                  className={`w-5 h-5 rounded-full border-2 mb-1 ${getCircleColors(idx, idx + 1 <= currentPhase)}`}
+                ></div>
+                <span>{phase}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
