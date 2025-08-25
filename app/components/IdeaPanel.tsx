@@ -44,7 +44,7 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
       className="w-full max-w-3xl pt-6 px-6 pb-6 border border-neutral-200 bg-white flex flex-col gap-6 relative rounded-xl shadow-lg"
     >
       <button
-        className="absolute top-0 right-0 px-3 py-1 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50 text-med"
+        className="absolute top-3 right-3 px-3 py-1 border border-neutral-200 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50 rounded-lg text-sm"
         onClick={() => handleClose(idea)}
       >
         Close
