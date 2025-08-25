@@ -44,14 +44,13 @@ export const IdeaPanel: FC<IdeaPanelProps> = ({ idea, handleClose }) => {
       className="w-full max-w-3xl pt-6 px-6 pb-6 border border-neutral-200 bg-white flex flex-col gap-6 relative rounded-xl shadow-lg"
     >
       <button
-        className="absolute top-3 right-3 px-3 py-1 border border-neutral-200 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50 rounded-lg text-sm"
+        className="absolute top-6 right-6 px-3 py-1 border border-neutral-200 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-50 rounded-lg text-sm"
         onClick={() => handleClose(idea)}
       >
         Close
       </button>
 
-      <h1 className="text-lg font-bold leading-tight font-sans">{idea.solution}</h1>
-
+      <h1 className="text-lg font-bold leading-tight font-sans mr-6">{idea.solution}</h1>
       <div className="flex gap-3 flex-wrap">
         <span className="border border-neutral-300 px-2 py-1 rounded-full text-sm">
           {toTitleCase(idea.borough)}
